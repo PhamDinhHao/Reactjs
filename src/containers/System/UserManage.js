@@ -113,7 +113,7 @@ class UserManage extends Component {
         console.log('check render', this.state)
         let arrUsers = this.state.arrUsers;
         return (
-            <div className="user-contaner">
+            <div className="user-contaner" >
                 <ModalUser
                     isOpen={this.state.isOpenModalUser}
                     toggleFromParent={this.toggleUserModal}
@@ -132,7 +132,7 @@ class UserManage extends Component {
                     <button className='btn btn-primary px-3' onClick={() => this.handleAddNewUser()}><i className='fas fa-plus'></i>Add new users</button>
                 </div>
                 <div className='users-table mt-4 mx-3'>
-                    <table id="customers">
+                    <table id="customers" >
                         <tbody>
                             <tr>
                                 <th>Email</th>
