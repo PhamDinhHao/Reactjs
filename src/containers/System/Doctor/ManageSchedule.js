@@ -111,7 +111,7 @@ class ManageSchedule extends Component {
                 selectedTime.map(schedule => {
                     let object = {};
                     object.doctorId = selectedDoctor.value;
-                    object.date = formatedDate;
+                    object.date = "" + formatedDate;
                     object.timeType = schedule.keyMap;
                     result.push(object)
                 })
