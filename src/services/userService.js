@@ -33,7 +33,10 @@ const saveDetailDoctorService = (data) => {
 const getDEtailInforDoctor = (inputid) => {
     return axios.get(`/api/get-detail-doctor-by-id?id=${inputid}`)
 }
+const saveBulkScheduleDoctor = (data) => {
+    return axios.post('/api/bulk-create-schedule', data)
+}
 export {
     handleLoginAPI, getAllUser, createNewUserService, deleteUserService, editUserService, getAllCodeService, getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService,
-    getDEtailInforDoctor,
+    getDEtailInforDoctor, saveBulkScheduleDoctor
 }
