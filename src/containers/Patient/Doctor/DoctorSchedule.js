@@ -7,13 +7,15 @@ import { LANGUAGES } from '../../../utils';
 import moment from 'moment';
 import 'moment/locale/vi';
 import { FormattedMessage } from 'react-intl';
-
+import BookingModal from './BookingModal';
 class DoctorSchedule extends Component {
     constructor(props) {
         super(props);
         this.state = {
             allDays: [],
             allAvailableTime: [],
+            isOpenModalBooking: false,
+            dataScheduleTimeModal: {}
         };
     }
 
@@ -80,21 +82,29 @@ class DoctorSchedule extends Component {
         }
     };
 
-    render() {
-        const { allDays, allAvailableTime } = this.state;
-        const { language } = this.props;
+    hanleClickScheduleTime = (time) => {
+        this.setState({ isOpenModalBooking: true, dataScheduleTimeModal: time });
+    }
+    closeModalBooking = () => {
+        this.setState({ isOpenModalBooking: false });
+    }
 
+    render() {
+        const { allDays, allAvailableTime, isOpenModalBooking, dataScheduleTimeModal } = this.state;
+        const { language } = this.props;
+        
         return (
-            <div className="doctor-schedule-container">
-                <div className="all-schedule">
-                    <select onChange={this.handleOnChangeSelect}>
-                        {allDays.map((item, index) => (
-                            <option value={item.value} key={index}>
+            <>
+                <div className="doctor-schedule-container">
+                    <div className="all-schedule">
+                        <select onChange={this.handleOnChangeSelect}>
+                            {allDays.map((item, index) => (
+                                <option value={item.value} key={index}>
                                 {item.label}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 <div className="all-available-time">
                     <div className="text-calendar">
                         <i className="fas fa-calendar-alt">
@@ -116,6 +126,7 @@ class DoctorSchedule extends Component {
                                             <button
                                                 key={index}
                                                 className={language === LANGUAGES.VI ? 'btn-vie' : 'btn-en'}
+                                                onClick={() => this.hanleClickScheduleTime(item)}
                                             >
                                                 {timeDisplay}
                                             </button>
@@ -135,9 +146,15 @@ class DoctorSchedule extends Component {
                                 <FormattedMessage id="patient.detail-doctor.no-schedule" />
                             </div>
                         )}
+                        </div>
                     </div>
                 </div>
-            </div>
+                <BookingModal
+                    isOpen={isOpenModalBooking}
+                    dataScheduleTimeModal={dataScheduleTimeModal}
+                    closeModalBooking={this.closeModalBooking}
+                />
+            </>
         );
     }
 }
