@@ -2,6 +2,9 @@
     .intro-doctor {
         display: flex;
         .content-left {
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
             width: 80px;
             height: 80px;
             background: center center no-repeat;

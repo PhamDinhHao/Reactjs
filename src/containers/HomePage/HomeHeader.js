@@ -29,8 +29,7 @@ class HomeHeader extends Component {
                 <div className='home-header-container'>
                     <div className='home-header-content'>
                         <div className='left-content'>
-                            <i className="fas fa-bars"></i>
-                            <img className='header-logo' src={logo} onClick={() => this.returnToHome()}></img>
+                            <i className="fas fa-bars" onClick={() => this.returnToHome()}></i>
                         </div>
                         <div className='center-content'>
                             <div className='child-content'>
