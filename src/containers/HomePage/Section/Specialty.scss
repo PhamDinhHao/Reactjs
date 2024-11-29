@@ -1,0 +1,9 @@
+.section-specialty {
+    cursor: pointer;
+    .specialty-name {
+        padding: 10px 0;
+        &:hover{
+            color: #45c3d2;
+        }
+    }
+}
