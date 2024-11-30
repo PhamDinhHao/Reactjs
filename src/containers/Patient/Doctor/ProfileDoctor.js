@@ -15,6 +15,7 @@ import { Modal } from 'reactstrap';
 import './ProfileDoctor.scss';
 import _ from 'lodash';
 import moment from 'moment'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -72,7 +73,7 @@ class ProfileDoctor extends Component {
 
     render() {
         let { dataProfile } = this.state
-        let { language,isshowDescriptionDoctor, dataTime } = this.props
+        let { language,isshowDescriptionDoctor, dataTime, isShowPrice, isShowLinkDetail, doctorId } = this.props
 
         let nameVi = '', nameEn = ''
         if (dataProfile && dataProfile.positionData) {
@@ -95,11 +96,14 @@ class ProfileDoctor extends Component {
                         </div>
                     </div>
                 </div>
-                <div className='price'>
+                {isShowLinkDetail === true && <div className='view-detail-doctor'>
+                        <Link to={`/detail-doctor/${doctorId}`}>Xem thêm</Link>
+                </div>}
+                {isShowPrice === true && <div className='price'>
                     <FormattedMessage id="patient.extra-infor-doctor.price"/>
                     {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.VI && <NumberFormat className='currency' value={dataProfile.Doctor_Infor.priceTypeData} displayType={'text'} thousandSeparator={true} suffix='VND' />}
                     {dataProfile && dataProfile.Doctor_Infor && language === LANGUAGES.EN && <NumberFormat className='currency' value={dataProfile.Doctor_Infor.priceTypeData} displayType={'text'} thousandSeparator={true} suffix='USD' />}
-                </div>
+                </div>}
             </div>
         );
     }
