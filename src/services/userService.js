@@ -70,7 +70,14 @@ const getAllProvince = () => {
 const getAllDetailSpecialtyById = (data) => {
     return axios.get(`/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`)
 }
+const getAllClinic = () => {
+    return axios.get('/api/get-clinic')
+}
+const getAllDetailClinicById = (data) => {
+    return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}`)
+}
 export {
     handleLoginAPI, getAllUser, createNewUserService, deleteUserService, editUserService, getAllCodeService, getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService,
     getDEtailInforDoctor, saveBulkScheduleDoctor, getScheduleByDate, getExtraInforDoctorById, getProfileDoctorById, getDoctorInfoById, postBookingAppointment, verifyBookingAppointment, createNewSpecialty, getAllSpecialty,getAllProvince,getAllDetailSpecialtyById,createNewClinic
+    ,getAllClinic,getAllDetailClinicById
 }
