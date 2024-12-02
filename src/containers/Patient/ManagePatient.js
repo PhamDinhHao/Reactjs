@@ -179,7 +179,7 @@ const mapStateToProps = state => {
     return {
 
         language: state.app.language,
-        user: state.user.unserInfo
+        user: state.user.userInfo
     };
 };
 

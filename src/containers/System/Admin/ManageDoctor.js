@@ -81,7 +81,7 @@ class ManageDoctor extends Component {
         }
         if (prevProps.allRequiredDoctorInfor !== this.props.allRequiredDoctorInfor) {
             let { resPayment, resPrice, resProvince, resSpecialty } = this.props.allRequiredDoctorInfor
-
+            console.log(resPrice, resPayment)
             let dataSelectPrice = this.buildDataInputSelect(resPrice, "PRICE")
             let dataSelectPayment = this.buildDataInputSelect(resPayment, "PAYMENT")
             let dataSelectProvince = this.buildDataInputSelect(resProvince, "PROVINCE")

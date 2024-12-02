@@ -35,7 +35,6 @@ class HomePage extends Component {
                 <MedicalFacility setting={setting} />
                 <OutStandingDoctor setting={setting} />
                 <HandBook setting={setting} />
-                <About />
                 <HomeFooter />
             </div>
 

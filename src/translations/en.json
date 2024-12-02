@@ -68,11 +68,13 @@
         "save": "Save infor"
     },
     "patient": {
-        "detai-doctor": {
+        "detail-doctor": {
             "schedule": "Schedule",
             "no-schedule": "The docter does not have an appoinment during this time, plsease choose differrent time",
             "choose": "Choose",
-            "book-free": " and book (free)"
+            "free": " and book (free)",
+            "book-free": " and book (free)",
+            "book-paid": " and book (paid)"
         },
         "extra-infor-doctor": {
             "text-address": "Address of examination",
