@@ -1,36 +1,178 @@
-.manage-schedule-container {
-    .m-s-title {
-        text-transform: uppercase;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        font-weight: 600;
-        font-size: 17px;
-        text-align: center;
-    }
+.schedule-container {
+    padding: 24px;
+    background: #f8fafc;
+    min-height: 100vh;
 
-    .pick-hour-container {
-        padding-top: 20px;
-        padding-bottom: 20px;
+    .schedule-header {
+        margin-bottom: 24px;
 
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #2d3748;
+            font-size: 24px;
+            font-weight: 600;
 
-        button {
-            padding: 5px 15px;
-            border: 1px solid grey;
+            i {
+                color: #3182ce;
+            }
         }
     }
 
-    .btn-schedule {
-        &.active {
-            background-color: orange;
+    .schedule-content {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+
+        .schedule-form {
+            padding: 24px;
+
+            .form-row {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 24px;
+                margin-bottom: 24px;
+
+                .form-group {
+                    label {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        color: #4a5568;
+                        font-weight: 500;
+                        margin-bottom: 8px;
+
+                        i {
+                            color: #3182ce;
+                        }
+                    }
+
+                    .doctor-select {
+                        .select__control {
+                            border-color: #e2e8f0;
+                            border-radius: 8px;
+                            min-height: 42px;
+
+                            &:hover {
+                                border-color: #3182ce;
+                            }
+                        }
+
+                        .select__menu {
+                            border-radius: 8px;
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        }
+                    }
+
+                    .date-picker {
+                        width: 100%;
+                        padding: 10px;
+                        border: 1px solid #e2e8f0;
+                        border-radius: 8px;
+                        font-size: 14px;
+
+                        &:focus {
+                            outline: none;
+                            border-color: #3182ce;
+                            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+                        }
+                    }
+                }
+            }
+
+            .time-slots-container {
+                margin-bottom: 24px;
+
+                .time-slots-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    color: #2d3748;
+                    font-size: 18px;
+                    font-weight: 600;
+                    margin-bottom: 16px;
+
+                    i {
+                        color: #3182ce;
+                    }
+                }
+
+                .time-slots-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                    gap: 12px;
+
+                    .time-slot {
+                        padding: 12px;
+                        border: none;
+                        border-radius: 8px;
+                        background: #edf2f7;
+                        color: #4a5568;
+                        font-weight: 500;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+
+                        &:hover {
+                            background: #e2e8f0;
+                        }
+
+                        &.active {
+                            background: #3182ce;
+                            color: white;
+                        }
+
+                        .time-text {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+
+            .form-actions {
+                display: flex;
+                justify-content: flex-end;
+
+                .save-button {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 12px 24px;
+                    background: #3182ce;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background: #2c5282;
+                    }
+
+                    i {
+                        font-size: 16px;
+                    }
+                }
+            }
         }
     }
+}
 
-    .btn-save-schedule {
-        margin-top: 20px;
+// Responsive styles
+@media (max-width: 768px) {
+    .schedule-container {
+        padding: 16px;
 
+        .schedule-content {
+            .schedule-form {
+                padding: 16px;
 
+                .time-slots-grid {
+                    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                }
+            }
+        }
     }
 }

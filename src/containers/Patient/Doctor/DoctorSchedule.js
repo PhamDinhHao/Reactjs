@@ -97,63 +97,82 @@ class DoctorSchedule extends Component {
     render() {
         const { allDays, allAvailableTime, isOpenModalBooking, dataScheduleTimeModal } = this.state;
         const { language } = this.props;
-        console.log(dataScheduleTimeModal);
+
         return (
             <>
                 <div className="doctor-schedule-container">
-                    <div className="all-schedule">
-                        <select onChange={this.handleOnChangeSelect}>
+                    <div className="schedule-header">
+                        <div className="calendar-icon">
+                            <i className="fas fa-calendar-alt"></i>
+                        </div>
+                        <select 
+                            onChange={this.handleOnChangeSelect}
+                            className="date-selector"
+                        >
                             {allDays.map((item, index) => (
                                 <option value={item.value} key={index}>
-                                {item.label}
+                                    {item.label}
                                 </option>
                             ))}
                         </select>
                     </div>
-                <div className="all-available-time">
-                    <div className="text-calendar">
-                        <i className="fas fa-calendar-alt">
+
+                    <div className="schedule-body">
+                        <div className="schedule-title">
+                            <i className="far fa-clock"></i>
                             <span>
                                 <FormattedMessage id="patient.detail-doctor.schedule" />
                             </span>
-                        </i>
-                    </div>
-                    <div className="time-content">
-                        {allAvailableTime.length > 0 ? (
-                            <>
-                                <div className="time-content-btns">
-                                    {allAvailableTime.map((item, index) => {
-                                        const timeDisplay =
-                                            language === LANGUAGES.VI
+                        </div>
+
+                        <div className="schedule-content">
+                            {allAvailableTime.length > 0 ? (
+                                <div className="available-schedule">
+                                    <div className="time-slots">
+                                        {allAvailableTime.map((item, index) => {
+                                            const timeDisplay = language === LANGUAGES.VI
                                                 ? item.timeTypeData.valueVi
                                                 : item.timeTypeData.valueEn;
-                                        return (
-                                            <button
-                                                key={index}
-                                                className={language === LANGUAGES.VI ? 'btn-vie' : 'btn-en'}
-                                                onClick={() => this.hanleClickScheduleTime(item)}
-                                            >
-                                                {timeDisplay}
-                                            </button>
-                                        );
-                                    })}
+                                            return (
+                                                <button
+                                                    key={index}
+                                                    className={`time-button ${language === LANGUAGES.VI ? 'btn-vie' : 'btn-en'}`}
+                                                    onClick={() => this.hanleClickScheduleTime(item)}
+                                                >
+                                                    <i className="far fa-clock"></i>
+                                                    <span>{timeDisplay}</span>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+
+                                    <div className="schedule-note">
+                                        <div className="note-item">
+                                            <i className="fas fa-info-circle"></i>
+                                            <span>
+                                                <FormattedMessage id="patient.detail-doctor.choose" />
+                                            </span>
+                                        </div>
+                                        <div className="note-item">
+                                            <i className="fas fa-tag"></i>
+                                            <span>
+                                                <FormattedMessage id="patient.detail-doctor.free" />
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="book-free">
+                            ) : (
+                                <div className="no-schedule">
+                                    <i className="fas fa-calendar-times"></i>
                                     <span>
-                                        <FormattedMessage id="patient.detail-doctor.choose" />
-                                        <i className="far fa-hand-point-up"></i>
-                                        <FormattedMessage id="patient.detail-doctor.free" />
+                                        <FormattedMessage id="patient.detail-doctor.no-schedule" />
                                     </span>
                                 </div>
-                            </>
-                        ) : (
-                            <div className="no-schedule">
-                                <FormattedMessage id="patient.detail-doctor.no-schedule" />
-                            </div>
-                        )}
+                            )}
                         </div>
                     </div>
                 </div>
+
                 <BookingModal
                     isOpen={isOpenModalBooking}
                     dataScheduleTimeModal={dataScheduleTimeModal}

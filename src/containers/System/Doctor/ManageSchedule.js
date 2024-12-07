@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import './ManageSchedule.scss';
 import { FormattedMessage } from 'react-intl';
 import Select from 'react-select';
-import * as actions from "../../../store/actions";
-import { CRUD_ACTIONS, LANGUAGES, dateFormat } from '../../../utils';
-import DatePicker from '../../../components/Input/DatePicker'
-import moment from 'moment';
+import DatePicker from '../../../components/Input/DatePicker';
 import { toast } from 'react-toastify';
+import moment from 'moment';
 import _ from 'lodash';
+import * as actions from "../../../store/actions";
+import { LANGUAGES } from '../../../utils';
 import { saveBulkScheduleDoctor } from '../../../services/userService';
+import './ManageSchedule.scss';
+
 class ManageSchedule extends Component {
     constructor(props) {
         super(props);
@@ -136,77 +137,97 @@ class ManageSchedule extends Component {
 
     }
     render() {
-        const { isLoggedIn } = this.props;
-        let { rangeTime } = this.state;
-        let { language } = this.props
-        let yesterday = new Date(new Date().setDate(new Date().getDate - 1));
+        const { language } = this.props;
+        const { rangeTime, selectedDoctor, currentDate } = this.state;
+        const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+
         return (
-            <div className='manage-schedule-container'>
-                <div className='m-s-title'>
-                    <FormattedMessage id="manage-schedule.title" />
+            <div className='schedule-container'>
+                <div className='schedule-header'>
+                    <h2 className='page-title'>
+                        <i className="fas fa-calendar-alt"></i>
+                        <FormattedMessage id="manage-schedule.title" />
+                    </h2>
                 </div>
-                <div className='container'>
-                    <div className='row'>
-                        <div className='col-6 form-group'>
-                            <label><FormattedMessage id="manage-schedule.choose-doctor" /></label>
-                            <Select
 
-                                value={this.state.selectedDoctor}
-                                onChange={this.handleChangeSelect}
-                                options={this.state.listDoctors}
+                <div className='schedule-content'>
+                    <div className='schedule-form'>
+                        <div className='form-row'>
+                            <div className='form-group'>
+                                <label>
+                                    <i className="fas fa-user-md"></i>
+                                    <FormattedMessage id="manage-schedule.choose-doctor" />
+                                </label>
+                                <Select
+                                    value={selectedDoctor}
+                                    onChange={this.handleChangeSelect}
+                                    options={this.state.listDoctors}
+                                    className='doctor-select'
+                                    placeholder={<FormattedMessage id="manage-schedule.select-doctor" />}
+                                />
+                            </div>
 
-                            />
+                            <div className='form-group'>
+                                <label>
+                                    <i className="fas fa-calendar"></i>
+                                    <FormattedMessage id="manage-schedule.choose-date" />
+                                </label>
+                                <DatePicker
+                                    onChange={this.handleOnchangeDatePicker}
+                                    className='date-picker'
+                                    selected={currentDate}
+                                    minDate={yesterday}
+                                    placeholderText={language === LANGUAGES.VI ? 'Chọn ngày' : 'Select date'}
+                                />
+                            </div>
                         </div>
-                        <div className='col-6 form-group'>
-                            <label><FormattedMessage id="manage-schedule.choose-date" /></label>
-                            <DatePicker
-                                onChange={this.handleOnchangeDatePicker}
-                                className='form-control'
-                                delected={this.state.currentDate[0]}
-                                minDate={yesterday}
-                            />
-                        </div>
-                        <div className='col-12 pick-hour-container'>
-                            {rangeTime && rangeTime.length > 0 &&
-                                rangeTime.map((item, index) => {
-                                    return (
-                                        <button className={item.isSelected === true ? 'btn btn-schedule active' : 'btn btn-schedule'}
-                                            key={index}
-                                            onClick={() => this.hadleClickBtnTime(item)}
-                                        >
+
+                        <div className='time-slots-container'>
+                            <h3 className='time-slots-title'>
+                                <i className="fas fa-clock"></i>
+                                <FormattedMessage id="manage-schedule.choose-time" />
+                            </h3>
+                            <div className='time-slots-grid'>
+                                {rangeTime && rangeTime.map((item, index) => (
+                                    <button
+                                        key={index}
+                                        className={`time-slot ${item.isSelected ? 'active' : ''}`}
+                                        onClick={() => this.hadleClickBtnTime(item)}
+                                    >
+                                        <span className='time-text'>
                                             {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
-                                        </button>
-                                    )
-                                })
-                            }
-                        </div>
-                        <div className='col-12' onClick={() => this.handleSaveSchedule()}>
-                            <button className='btn btn-primary btn-save-schedule'><FormattedMessage id="manage-schedule.save" /></button>
+                                        </span>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
 
+                        <div className='form-actions'>
+                            <button 
+                                className='save-button'
+                                onClick={this.handleSaveSchedule}
+                            >
+                                <i className="fas fa-save"></i>
+                                <FormattedMessage id="manage-schedule.save" />
+                            </button>
+                        </div>
                     </div>
-
                 </div>
-            </div >
-
+            </div>
         );
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        allDoctors: state.admin.allDoctors,
-        language: state.app.language,
-        isLoggedIn: state.user.isLoggedIn,
-        allScheduleTime: state.admin.allScheduleTime,
-    };
-};
+const mapStateToProps = state => ({
+    allDoctors: state.admin.allDoctors,
+    language: state.app.language,
+    isLoggedIn: state.user.isLoggedIn,
+    allScheduleTime: state.admin.allScheduleTime,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-        fetchAllDoctorRedux: () => dispatch(actions.fetchAllDoctor()),
-        fetchAllScheduleTime: () => dispatch(actions.fetchAllScheduleTime()),
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    fetchAllDoctorRedux: () => dispatch(actions.fetchAllDoctor()),
+    fetchAllScheduleTime: () => dispatch(actions.fetchAllScheduleTime()),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageSchedule);

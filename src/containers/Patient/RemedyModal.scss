@@ -1,0 +1,171 @@
+.remedy-modal {
+    .modal-content {
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border: none;
+        
+        .modal-header {
+            background: linear-gradient(135deg, #00a8ff 0%, #0097e6 100%);
+            color: white;
+            border-radius: 12px 12px 0 0;
+            padding: 1rem 1.5rem;
+            border: none;
+            
+            .modal-title {
+                font-size: 1.25rem;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                
+                i {
+                    font-size: 1.4rem;
+                }
+            }
+            
+            .close-button {
+                background: transparent;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                padding: 0;
+                opacity: 0.8;
+                transition: all 0.2s;
+                
+                &:hover {
+                    opacity: 1;
+                    transform: scale(1.1);
+                }
+            }
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+            
+            .form-group {
+                margin-bottom: 1.5rem;
+                
+                label {
+                    font-weight: 600;
+                    color: #2d3436;
+                    margin-bottom: 0.5rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    
+                    i {
+                        color: #00a8ff;
+                    }
+                }
+                
+                .form-control {
+                    border-radius: 8px;
+                    border: 2px solid #e8e8e8;
+                    padding: 0.75rem 1rem;
+                    transition: all 0.3s;
+                    
+                    &:focus {
+                        border-color: #00a8ff;
+                        box-shadow: 0 0 0 3px rgba(0, 168, 255, 0.1);
+                    }
+                }
+                
+                .file-upload-wrapper {
+                    position: relative;
+                    
+                    .file-upload {
+                        display: none;
+                    }
+                    
+                    .file-upload-label {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        padding: 0.75rem 1rem;
+                        background: #f8f9fa;
+                        border: 2px dashed #dee2e6;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        transition: all 0.3s;
+                        
+                        i {
+                            font-size: 1.2rem;
+                            color: #00a8ff;
+                        }
+                        
+                        &:hover {
+                            background: #e9ecef;
+                            border-color: #00a8ff;
+                        }
+                    }
+                }
+            }
+        }
+        
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 10px;
+            
+            button {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 0.5rem 1.25rem;
+                border-radius: 6px;
+                font-weight: 600;
+                transition: all 0.3s;
+                
+                i {
+                    font-size: 1.1rem;
+                }
+            }
+            
+            .btn-cancel {
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                color: #4a5568;
+
+                &:hover {
+                    background: #edf2f7;
+                }
+            }
+
+            .btn-send {
+                background: #4299e1;
+                border: none;
+                color: white;
+
+                &:hover {
+                    background: #3182ce;
+                }
+
+                &:disabled {
+                    background: #cbd5e0;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}
+
+// Responsive styles
+@media (max-width: 576px) {
+    .remedy-modal {
+        .modal-content {
+            .modal-body {
+                padding: 16px;
+            }
+
+            .modal-footer {
+                flex-direction: column;
+                
+                button {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}

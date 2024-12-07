@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import DatePicker from 'react-flatpickr';
+import DatePicker from '../../../components/Input/DatePicker';
 import RemedyModal from './RemedyModal';
-import { getAllPatientForDoctor, postSendRemedy } from '../../services/userService';
+import LoadingOverlay from 'react-loading-overlay';
+import { getAllPatientForDoctor, postSendRemedy } from '../../../services/userService';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import './ManagePatient.scss';
-import { getDEtailInforDoctor } from '../../services/userService';
-    
+
 class ManagePatient extends Component {
     constructor(props) {
         super(props);
@@ -22,99 +22,17 @@ class ManagePatient extends Component {
     }
 
     // ... existing methods ...
-    async componentDidMount() {
 
-        this.getDataPatient();
-    }
-    getDataPatient = async () => {
-        let {user} = this.props;
-        let {currentDate} = this.state;
-        let formatedDate= new Date(currentDate).getTime();
-        let data = await getAllPatientForDoctor({doctorId: user.id, date: formatedDate});
-        if(data ){
-            this.setState({
-                dataPatient: data.data
-            })
-        }
-    }
-    getInforDoctor = async (doctorId) => {
-        let result = {}
-        if (doctorId) {
-            let data = await getDEtailInforDoctor(doctorId)
-            if (data && data.errCode === 0) {
-                result = data.data
-            }
-        }
-        return result
-    }
-
-    async componentDidUpdate(prevProps, prevState, snapshot) {
-
-        if (prevProps.language !== this.props.language) {
-
-        }
-
-    }
-    handleOnChangeDatePicker = (date) => {
-        this.setState({
-            currentDate: date[0]
-        },()=>{
-            this.getDataPatient();
-        })
-    }
-    btnConfirmBooking = (item) => {
-        let data = {
-            patientId: item.patientId,
-            doctorId: item.doctorId,
-            email: item.patientData.email,
-            timeType: item.timeType,
-            patientName: item.patientData.firstName,
-        }
-        this.setState({
-            isOpenRemedyModal: true,
-            dataModal: data
-        })
-    }
-    closeRemedyModal = () => {
-        this.setState({
-            isOpenRemedyModal: false,
-            dataModal: {}
-        })
-    }
-    sendRemedy = async (data) => {
-        let {dataModal} = this.state
-        this.setState({
-            isShowLoading: true
-        })
-        let res = await postSendRemedy({
-            email: data.email,
-            patientName: data.patientName,
-            timeType: data.timeType,
-            language: this.props.language,
-            imgBase64: data.imgBase64,
-            doctorId: data.doctorId,
-            patientId: data.patientId
-        });
-        if(res && res.errCode === 0){
-            this.setState({
-                isShowLoading: false
-            })
-            toast.success("Đã gửi điều trị");
-            this.closeRemedyModal();
-        }
-        else{
-            this.setState({
-                isShowLoading: false
-            })
-            toast.error("Gửi điều trị thất bại");
-        }
-    }
     render() {
         const { dataPatient, isOpenRemedyModal, isShowLoading, dataModal, currentDate } = this.state;
         const { language } = this.props;
-        console.log('dataPatient', isOpenRemedyModal);
+
         return (
-            <React.Fragment>
+            <LoadingOverlay
+                active={isShowLoading}
+                spinner
+                text='Processing...'
+            >
                 <div className='manage-patient-container'>
                     <div className='header-container'>
                         <div className='header-content'>
@@ -155,8 +73,8 @@ class ManagePatient extends Component {
                                     <tbody>
                                         {dataPatient.map((item, index) => {
                                             const time = language === "vi" ? 
-                                                item.timeTypeDataPatient.valueVi : 
-                                                item.timeTypeDataPatient.valueEn;
+                                                item.timeTypeDatePatient.valueVi : 
+                                                item.timeTypeDatePatient.valueEn;
                                             const gender = language === "vi" ? 
                                                 item.patientData.genderData.valueVi : 
                                                 item.patientData.genderData.valueEn;
@@ -206,9 +124,8 @@ class ManagePatient extends Component {
                     closeRemedyModal={this.closeRemedyModal}
                     dataModal={dataModal}
                     sendRemedy={this.sendRemedy}
-                    language={language}
                 />
-            </React.Fragment>
+            </LoadingOverlay>
         );
     }
 }

@@ -1,0 +1,174 @@
+.handbook-section {
+    padding: 40px 0;
+    background: #f8fafc;
+
+    .handbook-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+
+        .section-header {
+            margin-bottom: 32px;
+
+            .header-content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .title {
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    margin: 0;
+                    color: #2d3748;
+                    font-size: 28px;
+                    font-weight: 600;
+
+                    i {
+                        color: #4299e1;
+                    }
+                }
+
+                .view-more {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 8px;
+                    background: #ebf8ff;
+                    color: #2b6cb0;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background: #bee3f8;
+                    }
+
+                    i {
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+
+        .section-body {
+            .handbook-slider {
+                margin: 0 -12px;
+
+                .slick-slide {
+                    padding: 0 12px;
+                }
+
+                .handbook-item {
+                    .handbook-content {
+                        background: white;
+                        border-radius: 12px;
+                        overflow: hidden;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                        transition: transform 0.2s ease;
+
+                        &:hover {
+                            transform: translateY(-4px);
+
+                            .handbook-image .overlay {
+                                opacity: 0.3;
+                            }
+                        }
+
+                        .handbook-image {
+                            height: 200px;
+                            background-size: cover;
+                            background-position: center;
+                            position: relative;
+
+                            .overlay {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                bottom: 0;
+                                background: rgba(0, 0, 0, 0.4);
+                                transition: opacity 0.2s ease;
+                            }
+                        }
+
+                        .handbook-info {
+                            padding: 20px;
+
+                            .handbook-title {
+                                color: #2d3748;
+                                font-size: 18px;
+                                font-weight: 600;
+                                margin-bottom: 8px;
+                            }
+
+                            .handbook-description {
+                                color: #718096;
+                                font-size: 14px;
+                                line-height: 1.6;
+                                margin-bottom: 16px;
+                            }
+
+                            .handbook-footer {
+                                .read-more {
+                                    display: flex;
+                                    align-items: center;
+                                    gap: 6px;
+                                    color: #4299e1;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                    cursor: pointer;
+
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
+
+                                    i {
+                                        font-size: 12px;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+    .handbook-section {
+        padding: 32px 0;
+
+        .handbook-container {
+            .section-header {
+                .header-content {
+                    .title {
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .handbook-section {
+        padding: 24px 0;
+
+        .handbook-container {
+            padding: 0 16px;
+
+            .section-header {
+                .header-content {
+                    flex-direction: column;
+                    gap: 16px;
+                    align-items: flex-start;
+                }
+            }
+        }
+    }
+}

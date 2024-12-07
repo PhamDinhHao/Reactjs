@@ -1,124 +1,185 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './ManagePatient.scss';
-import { getAllPatientForDoctor, getDEtailInforDoctor } from '../../services/userService'; 
-import MarkdownIt from 'markdown-it';
-import 'react-markdown-editor-lite/lib/index.css';
-import _ from 'lodash';
-import DatePicker from '../../components/Input/DatePicker';
-import moment from 'moment';
+import { FormattedMessage } from 'react-intl';
+import { Modal } from 'reactstrap';
 import { CommonUtils } from '../../utils';
-import { Modal, ModalBody, ModalFooter } from 'reactstrap';
-
-// Initialize a markdown parser
-const mdParser = new MarkdownIt(/* Markdown-it options */);
-
-
-
-
+import { toast } from 'react-toastify';
+import './RemedyModal.scss';
 
 class RemedyModal extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            email:'',
-            imgBase64:''
+            email: '',
+            imgBase64: '',
+            fileName: '',
+            isLoading: false
         }
     }
 
-    async componentDidMount() {
-        if(this.props.dataModal){
+    componentDidMount() {
+        if(this.props.dataModal) {
             this.setState({
-                email: this.props.dataModal.email,
-            })
+                email: this.props.dataModal.email
+            });
         }
     }
-    
-   
 
-    async componentDidUpdate(prevProps, prevState, snapshot) {
-
-        if(prevProps.dataModal !== this.props.dataModal){
+    componentDidUpdate(prevProps) {
+        if(prevProps.dataModal !== this.props.dataModal) {
             this.setState({
-                email: this.props.dataModal.email,
-            })
+                email: this.props.dataModal.email
+            });
         }
-
     }
+
     handleOnChangeEmail = (e) => {
-        this.setState({
-            email: e.target.value
-        })
+        this.setState({ email: e.target.value });
     }
+
     handleOnChangeImgBase64 = async (e) => {
         let data = e.target.files[0];
-        if(data){
+        if(data) {
+            let fileName = data.name;
             let base64 = await CommonUtils.getBase64(data);
             this.setState({
-                imgBase64: base64
-            })
+                imgBase64: base64,
+                fileName: fileName
+            });
         }
     }
-    handleSendRemedy = () => {
-        this.props.sendRemedy(this.state);
+
+    handleSendRemedy = async () => {
+        const { email, imgBase64 } = this.state;
+        const { dataModal, closeRemedyModal, sendRemedy } =this.props;
+
+        if (!email || !imgBase64) {
+            toast.error('Please fill in all required fields');
+            return;
+        }
+
+        try {
+            this.setState({ isLoading: true });
+
+            const data = {
+                email: email,
+                imgBase64: imgBase64,
+                doctorId: dataModal.doctorId,
+                patientId: dataModal.patientId,
+                timeType: dataModal.timeType,
+                language: this.props.language,
+                patientName: dataModal.patientData.firstName
+            };
+
+            let res = await sendRemedy(data);
+
+            if (res && res.errCode === 0) {
+                toast.success('Send remedy succeed');
+                closeRemedyModal();
+                await this.props.loadPatientData();
+            } else {
+                toast.error('Something went wrong...');
+            }
+        } catch (error) {
+            console.error('Send remedy error:', error);
+            toast.error('Error sending remedy');
+        } finally {
+            this.setState({ isLoading: true });
+        }
     }
+
     render() {
-        let {isOpenModal, closeRemedyModal, sendRemedy, dataModal} = this.props;
+        const { isOpen, closeRemedyModal, sendRemedy } = this.props;
+        const { email, fileName } = this.state;
+        
         return (
             <Modal
-                isOpen={isOpenModal}
+                isOpen={isOpen}
                 toggle={closeRemedyModal}
-                size="md"
+                className="remedy-modal"
                 centered
-                className="booking-modal-container"
+                size="md"
             >
-                <div className='modal-header'>
-                    <h5 className='modal-title'>
-                        gui hoa don kham benh thanh cong
-                    </h5>
-                    <button type='button' className='close' onClick={closeRemedyModal}>
-                        <span aria-hidden="true">x</span>
-                    </button>
-                </div>
-                <ModalBody>
-                    <div className='row'>
-                        <div className='col-6 form-group'>
-                            <label>email</label>
-                            <input type='text' className='form-control' value={this.state.email} onChange={this.handleOnChangeEmail} />
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">
+                            <i className="fas fa-file-medical"></i>
+                            <FormattedMessage id="remedy.send-invoice" />
+                        </h5>
+                        <button 
+                            className="close-button"
+                            onClick={closeRemedyModal}
+                        >
+                            <i className="fas fa-times"></i>
+                        </button>
+                    </div>
+
+                    <div className="modal-body">
+                        <div className="form-group">
+                            <label>
+                                <i className="fas fa-envelope"></i>
+                                <FormattedMessage id="remedy.email" />
+                            </label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                value={email}
+                                onChange={this.handleOnChangeEmail}
+                                placeholder="patient@example.com"
+                            />
                         </div>
-                        <div className='col-6 form-group'>
-                            <label>Chon file don thuoc</label>
-                            <input type='file' className='form-control-file' onChange={(e) => this.handleOnChangeImgBase64(e)} />
+
+                        <div className="form-group">
+                            <label>
+                                <i className="fas fa-file-prescription"></i>
+                                <FormattedMessage id="remedy.prescription" />
+                            </label>
+                            <div className="file-upload-wrapper">
+                                <input
+                                    type="file"
+                                    className="file-upload"
+                                    onChange={this.handleOnChangeImgBase64}
+                                    accept="image/*,.pdf"
+                                    id="file-upload"
+                                />
+                                <label htmlFor="file-upload" className="file-upload-label">
+                                    <i className="fas fa-cloud-upload-alt"></i>
+                                    {fileName || <FormattedMessage id="remedy.choose-file" />}
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </ModalBody>
-                <ModalFooter>
-                    <button type='button' className='btn btn-secondary' onClick={closeRemedyModal}>
-                        huy
-                    </button>
-                    <button type='button' className='btn btn-primary' onClick={() => this.handleSendRemedy()}>
-                        gui
-                    </button>
-                </ModalFooter>
+
+                    <div className="modal-footer">
+                        <button
+                            className="btn-cancel"
+                            onClick={closeRemedyModal}
+                        >
+                            <i className="fas fa-times-circle"></i>
+                            <FormattedMessage id="remedy.cancel" />
+                        </button>
+                        <button
+                            className="btn-send"
+                            onClick={() => this.handleSendRemedy()}
+                            disabled={!this.state.imgBase64 || this.state.isLoading}
+                        >
+                            {this.state.isLoading ? (
+                                <i className="fas fa-spinner fa-spin"></i>
+                            ) : (
+                                <i className="fas fa-paper-plane"></i>
+                            )}
+                            <FormattedMessage id="remedy.send" />
+                        </button>
+                    </div>
+                </div>
             </Modal>
         );
     }
-
 }
 
-const mapStateToProps = state => {
-    return {
+const mapStateToProps = state => ({
+    language: state.app.language,
+    user: state.user.userInfo
+});
 
-        language: state.app.language,
-        user: state.user.unserInfo
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RemedyModal);
+export default connect(mapStateToProps)(RemedyModal);

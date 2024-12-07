@@ -7,7 +7,7 @@ import { getExtraInforDoctorById, postBookingAppointment } from '../../../servic
 import NumberFormat from 'react-number-format';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
-import './Booking.Modal.scss';
+import './BookingModal.scss';
 import 'react-markdown-editor-lite/lib/index.css';
 import ProfileDoctor from './ProfileDoctor';
 import Select from 'react-select';
@@ -145,64 +145,184 @@ class BookingModal extends Component {
         return result
     }
     render() {
-        let { language } = this.props
-        let { isOpen, closeModalBooking, dataScheduleTimeModal } = this.props
-        let doctorId = ''
-        if (dataScheduleTimeModal && !_.isEmpty(dataScheduleTimeModal)) {
-            doctorId = dataScheduleTimeModal.doctorId
-    }
+        const { language, isOpen, closeModalBooking, dataScheduleTimeModal } = this.props;
+        const doctorId = dataScheduleTimeModal?.doctorId || '';
 
         return (
-            <Modal isOpen={isOpen} toggle={closeModalBooking} className='booking-modal-container' size='lg' centered onClosed={closeModalBooking}>
+            <Modal 
+                isOpen={isOpen} 
+                toggle={closeModalBooking} 
+                className='booking-modal-container' 
+                size='lg' 
+                centered
+            >
                 <div className='booking-modal-content'>
-                    <div className='booking-modal-header'>
-                        <span className='left'><FormattedMessage id="patient.booking-modal.title"/></span>
-                        <span className='right' onClick={closeModalBooking}><i className="fas fa-times"></i></span>
+                    <div className='modal-header'>
+                        <h5 className='modal-title'>
+                            <i className="fas fa-calendar-check pulse"></i>
+                            <FormattedMessage id="patient.booking-modal.title"/>
+                        </h5>
+                        <button className='close-button' onClick={closeModalBooking}>
+                            <i className="fas fa-times"></i>
+                        </button>
                     </div>
-                    <div className='booking-modal-body'>
-                        <div className='doctor-info'>
-                            <ProfileDoctor doctorId={doctorId} isshowDescriptionDoctor={false} dataTime={dataScheduleTimeModal} isShowPrice={false} isShowLinkDetail={false}/>
+
+                    <div className='modal-body'>
+                        <div className='doctor-profile-section'>
+                            <div className='section-title'>
+                                <i className="fas fa-user-md"></i>
+                                <span>
+                                    <FormattedMessage id="patient.booking-modal.doctor-info"/>
+                                </span>
+                            </div>
+                            <ProfileDoctor 
+                                doctorId={doctorId} 
+                                isshowDescriptionDoctor={false} 
+                                dataTime={dataScheduleTimeModal} 
+                                isShowPrice={false} 
+                                isShowLinkDetail={false}
+                            />
                         </div>
-                        <div className='row'>
-                            <div className='col-6 form-group'>
-                                <label><FormattedMessage id="patient.booking-modal.full-name"/></label>
-                                <input className='form-control' onChange={(event) => this.handleOnChangeInput(event, 'fullName')} value={this.state.fullName}/>
+
+                        <div className='booking-form'>
+                            <div className='section-title'>
+                                <i className="fas fa-file-medical"></i>
+                                <span>
+                                    <FormattedMessage id="patient.booking-modal.booking-info"/>
+                                </span>
                             </div>
-                            <div className='col-6 form-group'>
-                                <label><FormattedMessage id="patient.booking-modal.phone-number"/></label>
-                                <input className='form-control' onChange={(event) => this.handleOnChangeInput(event, 'phoneNumber')} value={this.state.phoneNumber}/>
+
+                            <div className='form-grid'>
+                                <div className='form-group'>
+                                    <label>
+                                        <i className="fas fa-user"></i>
+                                        <FormattedMessage id="patient.booking-modal.full-name"/>
+                                        <span className="required">*</span>
+                                    </label>
+                                    <input 
+                                        className='form-control with-icon'
+                                        onChange={(event) => this.handleOnChangeInput(event, 'fullName')}
+                                        value={this.state.fullName}
+                                        placeholder={language === LANGUAGES.VI ? "Nhập họ tên" : "Enter full name"}
+                                    />
+                                </div>
+
+                                <div className='form-group'>
+                                    <label>
+                                        <i className="fas fa-phone-alt"></i>
+                                        <FormattedMessage id="patient.booking-modal.phone-number"/>
+                                        <span className="required">*</span>
+                                    </label>
+                                    <input 
+                                        className='form-control with-icon'
+                                        onChange={(event) => this.handleOnChangeInput(event, 'phoneNumber')}
+                                        value={this.state.phoneNumber}
+                                        placeholder={language === LANGUAGES.VI ? "Nhập số điện thoại" : "Enter phone number"}
+                                    />
+                                </div>
+
+                                <div className='form-group'>
+                                    <label>
+                                        <i className="fas fa-envelope"></i>
+                                        <FormattedMessage id="patient.booking-modal.email"/>
+                                        <span className="required">*</span>
+                                    </label>
+                                    <input 
+                                        className='form-control with-icon'
+                                        onChange={(event) => this.handleOnChangeInput(event, 'email')}
+                                        value={this.state.email}
+                                        placeholder={language === LANGUAGES.VI ? "Nhập email" : "Enter email"}
+                                    />
+                                </div>
+
+                                <div className='form-group'>
+                                    <label>
+                                        <i className="fas fa-map-marker-alt"></i>
+                                        <FormattedMessage id="patient.booking-modal.address"/>
+                                        <span className="required">*</span>
+                                    </label>
+                                    <input 
+                                        className='form-control with-icon'
+                                        onChange={(event) => this.handleOnChangeInput(event, 'address')}
+                                        value={this.state.address}
+                                        placeholder={language === LANGUAGES.VI ? "Nhập địa chỉ" : "Enter address"}
+                                    />
+                                </div>
+
+                                <div className='form-group'>
+                                    <label>
+                                        <i className="fas fa-birthday-cake"></i>
+                                        <FormattedMessage id="patient.booking-modal.birthday"/>
+                                        <span className="required">*</span>
+                                    </label>
+                                    <DatePicker 
+                                        className='form-control with-icon'
+                                        onChange={this.handleOnChangeDatePicker}
+                                        value={this.state.birthday}
+                                        placeholder={language === LANGUAGES.VI ? "Nhập ngày sinh" : "Enter birthday"}
+                                    />
+                                </div>
+
+                                <div className='form-group'>
+                                    <label>
+                                        <i className="fas fa-transgender"></i>
+                                        <FormattedMessage id="patient.booking-modal.gender"/>
+                                        <span className="required">*</span>
+                                    </label>
+                                    <Select 
+                                        options={this.state.genders}
+                                        onChange={this.handleOnChangeSelect}
+                                        value={this.state.selectedGender}
+                                        className='select__control'
+                                    />
+                                </div>
                             </div>
-                            <div className='col-6 form-group'>
-                                <label><FormattedMessage id="patient.booking-modal.email"/></label>
-                                <input className='form-control' onChange={(event) => this.handleOnChangeInput(event, 'email')} value={this.state.email}/>
-                            </div>
-                            <div className='col-6 form-group'>
-                                <label><FormattedMessage id="patient.booking-modal.address"/></label>
-                                <input className='form-control' onChange={(event) => this.handleOnChangeInput(event, 'address')} value={this.state.address}/>
-                            </div>
-                            <div className='col-12 form-group'>
-                                <label><FormattedMessage id="patient.booking-modal.reason"/></label>
-                                <input className='form-control' onChange={(event) => this.handleOnChangeInput(event, 'reason')} value={this.state.reason}/>
-                            </div>
-                            <div className='col-6 form-group'>
-                                <label><FormattedMessage id="patient.booking-modal.birthday"/></label>
-                                <DatePicker className='form-control' onChange={this.handleOnChangeDatePicker} value={this.state.birthday}/>
-                            </div>
-                            <div className='col-6 form-group'>
-                                <label><FormattedMessage id="patient.booking-modal.gender"/></label>
-                                <Select options={this.state.genders} onChange={this.handleOnChangeSelect} value={this.state.selectedGender}/>
+
+                            <div className='form-group full-width'>
+                                <label>
+                                    <i className="fas fa-comment-medical"></i>
+                                    <FormattedMessage id="patient.booking-modal.reason"/>
+                                </label>
+                                <textarea 
+                                    className='form-control with-icon'
+                                    onChange={(event) => this.handleOnChangeInput(event, 'reason')}
+                                    value={this.state.reason}
+                                    rows="3"
+                                    placeholder={language === LANGUAGES.VI ? "Mô tả triệu chứng" : "Describe your symptoms"}
+                                />
                             </div>
                         </div>
                     </div>
-                    <div className='booking-modal-footer'>
-                        <button className='btn-booking-confirm' onClick={this.handleConfirmBookingAppointment}><FormattedMessage id="patient.booking-modal.btn-confirm"/></button>
-                        <button className='btn-booking-cancel' onClick={closeModalBooking}><FormattedMessage id="patient.booking-modal.btn-cancel"/></button>
+
+                    <div className='modal-footer'>
+                        <div className='footer-content'>
+                            <div className='terms-notice'>
+                                <i className="fas fa-info-circle"></i>
+                                <span>
+                                    <FormattedMessage id="patient.booking-modal.terms-notice"/>
+                                </span>
+                            </div>
+                            
+                            <div className='action-buttons'>
+                                <button 
+                                    className='btn-cancel' 
+                                    onClick={closeModalBooking}
+                                >
+                                    <i className="fas fa-times"></i>
+                                    <FormattedMessage id="patient.booking-modal.btn-cancel"/>
+                                </button>
+                                <button 
+                                    className='btn-confirm' 
+                                    onClick={this.handleConfirmBookingAppointment}
+                                >
+                                    <i className="fas fa-check"></i>
+                                    <FormattedMessage id="patient.booking-modal.btn-confirm"/>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </Modal>
-
-
-
         );
     }
 

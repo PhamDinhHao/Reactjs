@@ -1,0 +1,152 @@
+.booking-modal-container {
+    .modal-content {
+        .booking-modal-content {
+            .modal-header {
+                .modal-title {
+                    i.pulse {
+                        animation: pulse 2s infinite;
+                    }
+                }
+            }
+
+            .modal-body {
+                .section-title {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 20px;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid #e2e8f0;
+                    color: #2d3748;
+                    font-weight: 600;
+
+                    i {
+                        color: #3182ce;
+                        font-size: 1.2em;
+                    }
+                }
+
+                .doctor-profile-section {
+                    background: #f8fafc;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin-bottom: 24px;
+                }
+
+                .booking-form {
+                    .form-grid {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 20px;
+                    }
+
+                    .form-group {
+                        position: relative;
+
+                        &.full-width {
+                            grid-column: 1 / -1;
+                        }
+
+                        label {
+                            .required {
+                                color: #e53e3e;
+                                margin-left: 4px;
+                            }
+                        }
+
+                        .form-control.with-icon {
+                            padding-left: 35px;
+
+                            & + i {
+                                position: absolute;
+                                left: 12px;
+                                top: 50%;
+                                transform: translateY(-50%);
+                                color: #718096;
+                            }
+                        }
+
+                        // Enhanced select styling
+                        .select__control {
+                            &:hover {
+                                border-color: #4299e1;
+                            }
+
+                            &--is-focused {
+                                border-color: #3182ce;
+                                box-shadow: 0 0 0 1px #3182ce;
+                            }
+                        }
+
+                        // Enhanced datepicker styling
+                        .react-datepicker-wrapper {
+                            width: 100%;
+
+                            .react-datepicker__input-container {
+                                input {
+                                    width: 100%;
+                                    padding-left: 35px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            .modal-footer {
+                .footer-content {
+                    width: 100%;
+
+                    .terms-notice {
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        color: #718096;
+                        font-size: 0.875rem;
+                        margin-bottom: 16px;
+
+                        i {
+                            color: #3182ce;
+                        }
+                    }
+
+                    .action-buttons {
+                        display: flex;
+                        justify-content: flex-end;
+                        gap: 12px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Animations
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+// Enhanced responsive styles
+@media (max-width: 768px) {
+    .booking-modal-container {
+        .modal-content {
+            .booking-modal-content {
+                .modal-body {
+                    .booking-form {
+                        .form-grid {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

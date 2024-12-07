@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './DetailSpecialty.scss';
 import HomeHeader from '../HomeHeader';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import DoctorExtraInfor from '../../Patient/Doctor/DoctorExtraInfor';
 import ProfileDoctor from '../../Patient/Doctor/ProfileDoctor';
 import DoctorSchedule from '../../Patient/Doctor/DoctorSchedule';
 import { getAllDetailSpecialtyById, getAllProvince } from '../../../services/userService';
-import _ from 'lodash';
 import { LANGUAGES } from '../../../utils';
+import _ from 'lodash';
+import './DetailSpecialty.scss';
+
 class DetailSpecialty extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             arrDoctorId: [],
             dataDetailSpecialty: {},
-            listProvince: []
+            listProvince: [],
+            selectedLocation: 'ALL'
         }
     }
+
     async componentDidMount(){
         if(this.props.match && this.props.match.params && this.props.match.params.id){
             let res = await getAllDetailSpecialtyById({
@@ -86,70 +87,90 @@ class DetailSpecialty extends Component {
         
     }
 
-    render(){
-        let {arrDoctorId, dataDetailSpecialty, listProvince} = this.state;
-        let {language} = this.props;
+    render() {
+        const { arrDoctorId, dataDetailSpecialty, listProvince } = this.state;
+        const { language } = this.props;
+
         return (
-            <><div className='detail-specialty-container'>
+            <div className='specialty-container'>
                 <HomeHeader />
-                <div className='detail-specialty-body'>
-                    <div className='description-specialty'>
+                
+                <div className='specialty-banner'>
+                    <div className='specialty-overlay'></div>
+                    <div className='specialty-content'>
+                        <h1 className='specialty-title'>
+                            {dataDetailSpecialty.name}
+                        </h1>
+                    </div>
+                </div>
+
+                <div className='specialty-body'>
+                    <div className='specialty-description'>
                         {dataDetailSpecialty && !_.isEmpty(dataDetailSpecialty) && (
-                            <div dangerouslySetInnerHTML={{__html: dataDetailSpecialty.descriptionHTML}}></div>
+                            <div className='description-content'
+                                dangerouslySetInnerHTML={{ 
+                                    __html: dataDetailSpecialty.descriptionHTML 
+                                }}>
+                            </div>
                         )}
                     </div>
-                    <div className='search-sp-docter'>
-                        <select onChange={(event) => this.handleOnchangeSelect(event)}>
-                            {listProvince.map((item, index) => {
-                                return <option key={index} value={item.keyMap}>{language === LANGUAGES.VI ? item.valueVi : item.valueEn}</option>
-                            })}
-                        </select>
+
+                    <div className='location-filter'>
+                        <div className='filter-wrapper'>
+                            <i className="fas fa-map-marker-alt"></i>
+                            <select 
+                                onChange={this.handleOnchangeSelect}
+                                value={this.state.selectedLocation}
+                            >
+                                {listProvince.map((item, index) => (
+                                    <option key={index} value={item.keyMap}>
+                                        {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
                     </div>
-                    {arrDoctorId.length > 0 && arrDoctorId.map((item, index) => {
-                        return <div className='each-doctor' key={index}>
-                            <div className='dt-content-left'>
-                                <div className='profile-doctor'>
+
+                    <div className='doctor-list'>
+                        {arrDoctorId.map((doctorId, index) => (
+                            <div className='doctor-card' key={index}>
+                                <div className='card-left'>
                                     <ProfileDoctor
-                                        doctorId={item}
+                                        doctorId={doctorId}
                                         isShowDescription={false}
-                                        isShowLinkDetail={false}
+                                        isShowLinkDetail={true}
                                         isShowPrice={false}
                                     />
                                 </div>
-                            </div>
-                            <div className='dt-content-right'>
-                                <div className='doctor-schedule'>
-                                    <DoctorSchedule
-                                        doctorIdFromParent={item}
-                                    />
+                                
+                                <div className='card-right'>
+                                    <div className='schedule-section'>
+                                        <h3 className='section-title'>
+                                            <i className="far fa-calendar-alt"></i>
+                                            {language === LANGUAGES.VI ? 'Lịch khám' : 'Schedule'}
+                                        </h3>
+                                        <DoctorSchedule doctorIdFromParent={doctorId} />
+                                    </div>
+                                    
+                                    <div className='extra-info-section'>
+                                        <h3 className='section-title'>
+                                            <i className="fas fa-info-circle"></i>
+                                            {language === LANGUAGES.VI ? 'Thông tin thêm' : 'Extra Info'}
+                                        </h3>
+                                        <DoctorExtraInfor doctorIdFromParent={doctorId} />
+                                    </div>
                                 </div>
-                                <div className='doctor-extra-info'>
-                                    <DoctorExtraInfor
-                                        doctorIdFromParent={item}
-                                    />
-                                </div>
                             </div>
-                        </div>
-                    })}
+                        ))}
+                    </div>
                 </div>
             </div>
-                
-                
-            </>
-
-        )
+        );
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        language: state.app.language,
-    };
-};
+const mapStateToProps = state => ({
+    language: state.app.language,
+});
 
-const mapDispatchToProps = dispatch => {
-    return {
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DetailSpecialty);
+export default connect(mapStateToProps)(DetailSpecialty);

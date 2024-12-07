@@ -1,59 +1,237 @@
 .doctor-extra-infor-container {
-    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-    .content-up {
-        margin-bottom: 10px;
-        .text-address {
-            text-transform: uppercase;
-            color: #333;
-        }
-        .name-clinic {
-            padding: 5px 0;
+    .clinic-info {
+        margin-bottom: 24px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid #e2e8f0;
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2d3748;
             font-weight: 600;
-            color: #333;
-        }
-        .detail-address {
-            color: #333;
-            font-weight: 600;
-        }
-    }
-    .content-down {
-        .short-infor {
-            .detail {
-                cursor: pointer;
-                color: rgb(38, 160, 231);
-            }
-            .currencu {
-                margin: 0 5px;
+            margin-bottom: 16px;
+
+            i {
+                color: #4299e1;
+                font-size: 18px;
             }
         }
-        .title-price {
-            margin-bottom: 10px;
-        }
-        .detail-infor {
-            border: 1px solid #ddd;
-            padding: 5px 0;
-            background-color: #f8f8f8;
-            .price {
-                padding-bottom: 5px;
-                .right {
-                    float: right;
+
+        .clinic-name {
+            h3 {
+                color: #2d3748;
+                font-size: 18px;
+                font-weight: 600;
+                margin-bottom: 8px;
+            }
+
+            .clinic-address {
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+                color: #4a5568;
+                font-size: 14px;
+                line-height: 1.6;
+
+                i {
+                    color: #4299e1;
+                    margin-top: 4px;
                 }
             }
-            .note {
-                
+        }
+    }
+
+    .price-info {
+        .price-summary {
+            .price-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: #2d3748;
+                font-weight: 600;
+                margin-bottom: 16px;
+
+                i {
+                    color: #4299e1;
+                    font-size: 18px;
+                }
+            }
+
+            .price-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: #f7fafc;
+                padding: 16px;
+                border-radius: 8px;
+
+                .price-amount {
+                    color: #2d3748;
+                    font-weight: 600;
+                    font-size: 16px;
+                }
+
+                .show-detail-btn {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 8px 16px;
+                    border: none;
+                    border-radius: 6px;
+                    background: #ebf8ff;
+                    color: #2b6cb0;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                        background: #bee3f8;
+                    }
+
+                    i {
+                        font-size: 14px;
+                    }
+                }
             }
         }
-        .payment {
-            border: 1px solid #ddd;
-            padding: 5px 0;
-            background-color: #eee;
-        }
-        .hide-price {
-            cursor: pointer;
-            span {
+
+        .price-details {
+            animation: fadeIn 0.3s ease;
+
+            .details-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: #2d3748;
+                font-weight: 600;
+                margin-bottom: 16px;
+
+                i {
+                    color: #4299e1;
+                    font-size: 18px;
+                }
+            }
+
+            .price-breakdown {
+                background: #f7fafc;
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 16px;
+
+                .price-row {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 12px;
+                    padding-bottom: 12px;
+                    border-bottom: 1px solid #e2e8f0;
+
+                    .label {
+                        color: #4a5568;
+                        font-size: 14px;
+                    }
+
+                    .amount {
+                        color: #2d3748;
+                        font-weight: 600;
+                    }
+                }
+
+                .note-section {
+                    display: flex;
+                    gap: 8px;
+                    color: #4a5568;
+                    font-size: 14px;
+                    margin-bottom: 12px;
+                    padding-bottom: 12px;
+                    border-bottom: 1px solid #e2e8f0;
+
+                    i {
+                        color: #4299e1;
+                        margin-top: 4px;
+                    }
+                }
+
+                .payment-method {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    color: #4a5568;
+                    font-size: 14px;
+
+                    i {
+                        color: #4299e1;
+                    }
+
+                    .method {
+                        color: #2d3748;
+                        font-weight: 500;
+                    }
+                }
+            }
+
+            .hide-detail-btn {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 8px 16px;
+                width: 100%;
+                border: none;
+                border-radius: 6px;
+                background: #ebf8ff;
+                color: #2b6cb0;
+                font-weight: 500;
                 cursor: pointer;
-                color: rgb(38, 160, 231);
+                justify-content: center;
+                transition: all 0.2s ease;
+
+                &:hover {
+                    background: #bee3f8;
+                }
+
+                i {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
+
+// Animations
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+    .doctor-extra-infor-container {
+        padding: 16px;
+
+        .price-info {
+            .price-summary {
+                .price-content {
+                    flex-direction: column;
+                    gap: 12px;
+                    text-align: center;
+
+                    .show-detail-btn {
+                        width: 100%;
+                        justify-content: center;
+                    }
+                }
             }
         }
     }
