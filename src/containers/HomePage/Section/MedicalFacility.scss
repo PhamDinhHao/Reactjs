@@ -1,9 +1,174 @@
-.clinic-child{
-    cursor: pointer;
-    .clinic-name{
-        padding: 10px 0;
-        &:hover{
-            color: #45c3d2;
+.medical-facility-section {
+    padding: 40px 0;
+    background: #f8f9fa;
+
+    .section-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+
+            .title-container {
+                .title-section {
+                    font-size: 28px;
+                    font-weight: 700;
+                    color: #2c3e50;
+                    margin-bottom: 8px;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    i {
+                        color: #3498db;
+                    }
+                }
+
+                .title-description {
+                    color: #7f8c8d;
+                    font-size: 16px;
+                }
+            }
+
+            .btn-section {
+                padding: 10px 20px;
+                background: #3498db;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    background: #2980b9;
+                    transform: translateY(-2px);
+                }
+
+                i {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .section-body {
+            .slick-slider {
+                margin: 0 -15px;
+
+                .slick-arrow {
+                    z-index: 1;
+                    &:before {
+                        color: #3498db;
+                        font-size: 30px;
+                    }
+                }
+            }
+
+            .clinic-card {
+                gap: 15px;
+                margin: 15px;
+                background: white;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+                cursor: pointer;
+
+                &:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+
+                    .clinic-image {
+                        .clinic-overlay {
+                            opacity: 1;
+                        }
+                    }
+                }
+
+                .clinic-image {
+                    position: relative;
+                    height: 200px;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        transition: transform 0.3s ease;
+                    }
+
+                    .clinic-overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background: rgba(52, 152, 219, 0.8);
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        opacity: 0;
+                        transition: all 0.3s ease;
+
+                        span {
+                            color: white;
+                            font-weight: 500;
+                            padding: 8px 16px;
+                            border: 2px solid white;
+                            border-radius: 20px;
+                        }
+                    }
+                }
+
+                .clinic-info {
+                    padding: 20px;
+
+                    .clinic-name {
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: #2c3e50;
+                        margin-bottom: 10px;
+                        line-height: 1.4;
+                    }
+
+                    .clinic-address {
+                        color: #7f8c8d;
+                        font-size: 14px;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+
+                        i {
+                            color: #e74c3c;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .medical-facility-section {
+        padding: 30px 0;
+
+        .section-container {
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+
+                .title-section {
+                    font-size: 24px;
+                }
+            }
         }
     }
 }

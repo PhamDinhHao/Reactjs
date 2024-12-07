@@ -292,28 +292,30 @@ class ManageDoctor extends Component {
                 <div className='manage-doctor-title'>
                     <FormattedMessage id="admin.manage-doctor.title" />
                 </div>
-                <div className='more-infor form-group' >
-                    <div className='content-left'>
-
-                        <label><FormattedMessage id="admin.manage-doctor.select-doctor" /></label>
-                        <Select
-
-                            value={this.state.selectedDoctor}
-                            onChange={this.handleChangeSelect}
-                            options={this.state.listDoctors}
-                            placeholder={<FormattedMessage id="admin.manage-doctor.select-doctor" />}
-                        />
+                
+                <div className='more-infor'>
+                    <div className='row'>
+                        <div className='col-6 content-left'>
+                            <label><FormattedMessage id="admin.manage-doctor.select-doctor" /></label>
+                            <Select
+                                className="select-doctor"
+                                value={this.state.selectedDoctor}
+                                onChange={this.handleChangeSelect}
+                                options={this.state.listDoctors}
+                                placeholder={<FormattedMessage id="admin.manage-doctor.select-doctor" />}
+                            />
+                        </div>
+                        <div className='col-6 content-right'>
+                            <label><FormattedMessage id="admin.manage-doctor.intro" /></label>
+                            <textarea 
+                                className='form-control'
+                                rows="4"
+                                onChange={(event) => this.handleOnchangeText(event, 'description')}
+                                value={this.state.description}
+                            />
+                        </div>
                     </div>
-                    <div className='content-right'>
-                        <label><label><FormattedMessage id="admin.manage-doctor.intro" /></label></label>
-                        <textarea className='form-control'
-                            rows="4"
-                            onChange={(event) => this.handleOnchangeText(event, 'description')}
-                            value={this.state.description}
-                        >
 
-                        </textarea>
-                    </div>
                     <div className='more-infor-extra row'>
                         <div className='col-4 form-group'>
                             <label><FormattedMessage id="admin.manage-doctor.price" /></label>
@@ -386,6 +388,7 @@ class ManageDoctor extends Component {
                         </div>
                     </div>
                 </div>
+
                 <div className='manage-doctor-editor'>
                     <MdEditor
                         style={{ height: '500px' }}
@@ -394,13 +397,17 @@ class ManageDoctor extends Component {
                         value={this.state.contentMarkdown}
                     />
                 </div>
-                <button
-                    onClick={() => this.handleSaveContentMarkdown()}
-                    className={hasOldData === true ? 'save-content-doctor' : 'create-content-doctor'}>
-                    {hasOldData === true ? <span><FormattedMessage id="admin.manage-doctor.save" /></span> : <span><FormattedMessage id="admin.manage-doctor.add" /></span>}
-                </button>
 
-
+                <div className='text-center mt-3'>
+                    <button
+                        onClick={() => this.handleSaveContentMarkdown()}
+                        className={hasOldData === true ? 'save-content-doctor' : 'create-content-doctor'}>
+                        {hasOldData === true ? 
+                            <span><FormattedMessage id="admin.manage-doctor.save" /></span> : 
+                            <span><FormattedMessage id="admin.manage-doctor.add" /></span>
+                        }
+                    </button>
+                </div>
             </div>
 
 

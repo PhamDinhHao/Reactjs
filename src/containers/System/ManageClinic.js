@@ -5,7 +5,9 @@ import { toast } from 'react-toastify';
 import { Button } from 'reactstrap';
 import MdEditor from 'react-markdown-editor-lite';
 import MarkdownIt from 'markdown-it';
-const mdParser = new MarkdownIt(/* Markdown-it options */);
+import './ManageClinic.scss';
+
+const mdParser = new MarkdownIt();
 
 class ManageClinic extends Component {
     constructor(props){
@@ -13,7 +15,7 @@ class ManageClinic extends Component {
         this.state = {
             name: '',
             address: '',
-            descriptionHtml: '',
+            descriptionHTML: '',
             descriptionMarkdown: '',
             imageBase64: ''
         }
@@ -31,7 +33,7 @@ class ManageClinic extends Component {
     }
     handleOnchangeEditor = ({html, text}) => {
         this.setState({
-            descriptionHtml: html,
+            descriptionHTML: html,
             descriptionMarkdown: text
         })
     }
@@ -52,7 +54,7 @@ class ManageClinic extends Component {
             this.setState({
                 name: '',
                 address: '',
-                descriptionHtml: '',
+                descriptionHTML: '',
                 descriptionMarkdown: '',
                 imageBase64: ''
             })
@@ -63,25 +65,85 @@ class ManageClinic extends Component {
     render() {
         return (
             <div className='manage-clinic-container'>
-                <div className='ms-title'>
-                    Manage clinic
+                <div className='clinic-header'>
+                    <h2>Quản lý phòng khám</h2>
+                    <p>Thêm và chỉnh sửa thông tin phòng khám</p>
                 </div>
-                <div className='add-new-clinic-row'>
-                    <div className='col-6 form-group'>
-                        <label>Tên phòng khám</label>
-                        <input type='text' className='form-control' onChange={(event) => this.handleOnchangeInput(event, 'name')} value={this.state.name} />
-                    </div>
-                    <div className='col-6 form-group'>
-                        <label>Ảnh phòng khám</label>
-                        <input type='file' className='form-control' onChange={(event) => this.handleOnchangeImage(event)} />
-                    </div>
-                    <div className='col-12'>
-                        <MdEditor onChange={this.handleOnchangeEditor} value={this.state.descriptionMarkdown} 
-                            style={{ height: '300px' }} renderHTML={text => mdParser.render(text)}
-                        />
-                    </div>
-                    <div className='col-12'>
-                        <Button className='btn-save-clinic' color='primary' onClick={() => this.handleSaveNewClinic()}>Save</Button>
+                
+                <div className='clinic-content'>
+                    <div className='clinic-form'>
+                        <div className='row'>
+                            <div className='col-6 form-group'>
+                                <label>Tên phòng khám</label>
+                                <input 
+                                    type='text' 
+                                    className='form-control' 
+                                    placeholder='Nhập tên phòng khám'
+                                    onChange={(event) => this.handleOnchangeInput(event, 'name')} 
+                                    value={this.state.name} 
+                                />
+                            </div>
+                            <div className='col-6 form-group'>
+                                <label>Địa chỉ phòng khám</label>
+                                <input 
+                                    type='text' 
+                                    className='form-control' 
+                                    placeholder='Nhập địa chỉ phòng khám'
+                                    onChange={(event) => this.handleOnchangeInput(event, 'address')} 
+                                    value={this.state.address} 
+                                />
+                            </div>
+                        </div>
+
+                        <div className='row mt-3'>
+                            <div className='col-6 form-group'>
+                                <label>Ảnh phòng khám</label>
+                                <div className='upload-image-container'>
+                                    <input 
+                                        type='file' 
+                                        id="clinic-image"
+                                        className='form-control' 
+                                        onChange={(event) => this.handleOnchangeImage(event)} 
+                                        hidden
+                                    />
+                                    <label className='upload-label' htmlFor="clinic-image">
+                                        <i className="fas fa-cloud-upload-alt"></i>
+                                        <span>Chọn ảnh</span>
+                                    </label>
+                                    {this.state.imageBase64 && 
+                                        <div className='preview-image'>
+                                            <img src={this.state.imageBase64} alt="Preview" />
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='row mt-3'>
+                            <div className='col-12'>
+                                <label>Thông tin chi tiết</label>
+                                <div className='markdown-editor'>
+                                    <MdEditor 
+                                        onChange={this.handleOnchangeEditor} 
+                                        value={this.state.descriptionMarkdown} 
+                                        style={{ height: '300px' }} 
+                                        renderHTML={text => mdParser.render(text)}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='row mt-4'>
+                            <div className='col-12 text-center'>
+                                <Button 
+                                    className='btn-save-clinic' 
+                                    color='primary' 
+                                    onClick={() => this.handleSaveNewClinic()}
+                                >
+                                    <i className="fas fa-save"></i> Lưu thông tin
+                                </Button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
