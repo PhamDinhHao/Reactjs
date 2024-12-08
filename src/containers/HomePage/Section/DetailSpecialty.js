@@ -4,7 +4,7 @@ import HomeHeader from '../HomeHeader';
 import DoctorExtraInfor from '../../Patient/Doctor/DoctorExtraInfor';
 import ProfileDoctor from '../../Patient/Doctor/ProfileDoctor';
 import DoctorSchedule from '../../Patient/Doctor/DoctorSchedule';
-import { getAllDetailSpecialtyById, getAllProvince } from '../../../services/userService';
+import { getAllCodeService, getAllDetailSpecialtyById, getAllProvince } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils';
 import _ from 'lodash';
 import './DetailSpecialty.scss';
@@ -26,12 +26,13 @@ class DetailSpecialty extends Component {
                 id: this.props.match.params.id,
                 location: 'ALL'
             });
-            let resProvince = await getAllProvince('PROVINCE');
+            let resProvince = await getAllCodeService("PROVINCE")
             if(res && res.errCode === 0 && resProvince && resProvince.errCode === 0){
-                let data = res.data;
+                let data = res.specialty;
                 let arrDoctorId = [];
-                if(data && !_.isEmpty(res.data)){
-                    let arr = data.DoctorSpecialty;
+
+                if(data){
+                    let arr = data.doctorSpecialty;
                     if(arr && arr.length > 0){
                         arr.forEach(item => {
                             arrDoctorId.push(item.doctorId);
@@ -67,11 +68,12 @@ class DetailSpecialty extends Component {
                 id: this.props.match.params.id,
                 location: event.target.value
             });
+
             if(res && res.errCode === 0){
-                let data = res.data;
+                let data = res.specialty;
                 let arrDoctorId = [];
-                if(data && !_.isEmpty(data)){
-                    let arr = data.DoctorSpecialty;
+                if(data){
+                    let arr = data.doctorSpecialty;
                     if(arr && arr.length > 0){
                         arr.forEach(item => {
                             arrDoctorId.push(item.doctorId);

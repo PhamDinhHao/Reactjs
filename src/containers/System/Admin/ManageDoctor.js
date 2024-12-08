@@ -59,11 +59,10 @@ class ManageDoctor extends Component {
             contentMarkdown: text,
             contentHTML: html,
         })
-        console.log('handleEditorChange', html, text);
     }
-    componentDidMount() {
-        this.props.fetchAllDoctorRedux()
-        this.props.getAllRequiredDoctorInfor()
+    async componentDidMount() {
+        await this.props.fetchAllDoctorRedux()
+        await this.props.getAllRequiredDoctorInfor()
     }
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.allDoctors !== this.props.allDoctors) {
@@ -80,18 +79,19 @@ class ManageDoctor extends Component {
             })
         }
         if (prevProps.allRequiredDoctorInfor !== this.props.allRequiredDoctorInfor) {
-            let { resPayment, resPrice, resProvince, resSpecialty } = this.props.allRequiredDoctorInfor
+            let { resPayment, resPrice, resProvince, resSpecialty, resClinic } = this.props.allRequiredDoctorInfor
             console.log(resPrice, resPayment)
             let dataSelectPrice = this.buildDataInputSelect(resPrice, "PRICE")
             let dataSelectPayment = this.buildDataInputSelect(resPayment, "PAYMENT")
             let dataSelectProvince = this.buildDataInputSelect(resProvince, "PROVINCE")
             let dataSelectSpecialty = this.buildDataInputSelect(resSpecialty, "SPECIALTY")
-
+            let dataSelectClinic = this.buildDataInputSelect(resClinic, "CLINIC")
             this.setState({
                 listPrice: dataSelectPrice,
                 listPayment: dataSelectPayment,
                 listProvince: dataSelectProvince,
-                listSpecialty: dataSelectSpecialty
+                listSpecialty: dataSelectSpecialty,
+                listClinic: dataSelectClinic
             })
         }
 
@@ -181,8 +181,9 @@ class ManageDoctor extends Component {
             action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
             selectedPrice: this.state.selectedPrice.value,
             selectedPayment: this.state.selectedPayment.value,
-            selectProvince: this.state.selectProvince.value,
+            selectedProvince: this.state.selectedProvince.value,
             selectedSpecialty: this.state.selectedSpecialty.value,
+            selectedClinic: this.state.selectedClinic.value,
             nameClinic: this.state.nameClinic,
             addressClinic: this.state.addressClinic,
             note: this.state.note,

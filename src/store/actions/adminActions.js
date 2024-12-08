@@ -329,13 +329,13 @@ export const getAllRequiredDoctorInfor = () => {
             console.log('resSpecialty', resSpecialty)
             console.log('resClinic', resClinic)
 
-            if (resPrice && resPrice.errCode === 0 && resPayment && resPayment.errCode === 0 && resProvince && resProvince.errCode === 0 && resSpecialty && resSpecialty.errCode === 0 && resClinic && resClinic.errCode === 0) {
+            if (resPrice && resPrice.errCode === 0 && resPayment && resPayment.errCode === 0 && resProvince && resProvince.errCode === 0 && resSpecialty && resSpecialty.errCode === 0 && resClinic) {
                 let data = {
                     resPrice: resPrice.data,
                     resPayment: resPayment.data,
                     resProvince: resProvince.data,
-                    resSpecialty: resSpecialty.data,
-                    resClinic: resClinic.data
+                    resSpecialty: resSpecialty.specialties,
+                    resClinic: resClinic
                 }
                 dispatch(fetchRequiredDoctorInforSuccess(data))
             } else {

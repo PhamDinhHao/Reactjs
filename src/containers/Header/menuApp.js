@@ -50,7 +50,7 @@ export const adminMenu = [
     { //quan ly chuyen khoa
         name: 'menu.admin.specialty', menus: [
             {
-                name: 'menu.admin.manage-specialty', link: '/system/manage-clinic'
+                name: 'menu.admin.manage-specialty', link: '/system/manage-specialty'
 
             }
 
