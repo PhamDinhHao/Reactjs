@@ -37,9 +37,10 @@ class DetailDoctor extends Component {
 
     }
     render() {
-        let { detailDoctor, currentDoctorId } = this.state;
+        let { detailDoctor } = this.state;
         let { language } = this.props;
         let nameVi = '', nameEn = '';
+        const currentDoctorId = this.props.match?.params?.id;
         if (detailDoctor && detailDoctor.positionData) {
             nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`;
             nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`;

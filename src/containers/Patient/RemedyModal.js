@@ -5,6 +5,7 @@ import { Modal } from 'reactstrap';
 import { CommonUtils } from '../../utils';
 import { toast } from 'react-toastify';
 import './RemedyModal.scss';
+import { postSendRemedy } from '../../services/userService';
 
 class RemedyModal extends Component {
     constructor(props) {
@@ -50,41 +51,40 @@ class RemedyModal extends Component {
     }
 
     handleSendRemedy = async () => {
-        const { email, imgBase64 } = this.state;
-        const { dataModal, closeRemedyModal, sendRemedy } =this.props;
-
-        if (!email || !imgBase64) {
-            toast.error('Please fill in all required fields');
-            return;
-        }
-
         try {
+            let { email, imgBase64 } = this.state;
+            let { dataModal } = this.props;
+
+            if (!email || !imgBase64) {
+                toast.error('Please fill in all required fields');
+                return;
+            }
+            console.log('dataModal', dataModal);
             this.setState({ isLoading: true });
 
-            const data = {
+            let res = await postSendRemedy({
                 email: email,
                 imgBase64: imgBase64,
                 doctorId: dataModal.doctorId,
                 patientId: dataModal.patientId,
                 timeType: dataModal.timeType,
                 language: this.props.language,
-                patientName: dataModal.patientData.firstName
-            };
-
-            let res = await sendRemedy(data);
+                patientName: dataModal.patientName
+            });
 
             if (res && res.errCode === 0) {
                 toast.success('Send remedy succeed');
-                closeRemedyModal();
+                this.props.closeRemedyModal();
                 await this.props.loadPatientData();
             } else {
-                toast.error('Something went wrong...');
+                toast.error(res.errMessage || 'Something went wrong...');
             }
+
         } catch (error) {
             console.error('Send remedy error:', error);
             toast.error('Error sending remedy');
         } finally {
-            this.setState({ isLoading: true });
+            this.setState({ isLoading: false });
         }
     }
 

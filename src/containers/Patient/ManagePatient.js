@@ -154,13 +154,13 @@ class ManagePatient extends Component {
                                     </thead>
                                     <tbody>
                                         {dataPatient.map((item, index) => {
+                                            console.log('item', item);
                                             const time = language === "vi" ? 
                                                 item.timeTypeDataPatient.valueVi : 
                                                 item.timeTypeDataPatient.valueEn;
                                             const gender = language === "vi" ? 
                                                 item.patientData.genderData.valueVi : 
                                                 item.patientData.genderData.valueEn;
-                                            
                                             return (
                                                 <tr key={index}>
                                                     <td>{index + 1}</td>
@@ -207,6 +207,7 @@ class ManagePatient extends Component {
                     dataModal={dataModal}
                     sendRemedy={this.sendRemedy}
                     language={language}
+                    loadPatientData={this.getDataPatient}
                 />
             </React.Fragment>
         );

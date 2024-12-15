@@ -53,9 +53,13 @@
         "role": "Vai trò",
         "image": "Ảnh đại diện",
         "save": "Lưu user",
-        "edit": "Lưu thay đổi"
+        "edit": "Lưu thay đổi",
+        "upload": "Tải lên",
+        "header": "Header"
     },
     "homepage": {
+        "read-more": "Xem thêm",
+        "view-profile": "Xem thông tin",
         "outstanding-doctor": "Bác sĩ nổi bật tuần qua",
         "more-infor": "Xem thêm",
         "specialty-popular": "Chuyên khoa phổ biến",
@@ -73,7 +77,8 @@
             "no-schedule": "Bác sĩ không có lịch hẹn trong thời gian nàym vui lòng chọn thời gian",
             "choose": "Chọn",
             "book-free": " và đặt (miễn phí)",
-            "free": " và đặt (miễn phí)"
+            "free": " và đặt (miễn phí)",
+            "view-more": "Xem thêm"
         },
         "extra-infor-doctor": {
             "text-address": "Địa chỉ phòng khám",
@@ -96,7 +101,12 @@
             "btn-cancel": "Hủy",
             "price": "Giá khám: ",
             "price-booking-modal": "Miễn phí khám bệnh",
-            "choose-for": "Đặt cho ai"
+            "choose-for": "Đặt cho ai",
+            "doctor-info": "Thông tin bác sĩ",
+            "doctor-name": "Tên bác sĩ",
+            "doctor-specialty": "Chuyên khoa",
+            "doctor-address": "Địa chỉ",
+            "terms-notice": "Điều khoản và điều kiện"
         }   
     },
     "admin": {
@@ -115,5 +125,19 @@
             "specialty": "Chuyên khoa",
             "select-clinic": "Chọn phòng khám"
         }
+    },
+    "remedy": {
+        "title": "Quản lý thuốc",
+        "add": "Thêm thuốc",
+        "save": "Lưu thông tin",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "first-name": "Tên",
+        "last-name": "Họ",
+        "phone-number": "Số điện thoại",
+        "address": "Địa chỉ",
+        "prescription": "Đơn thuốc",
+        "prescription-detail": "Chi tiết đơn thuốc",
+        "send-invoice": "Gửi hóa đơn"
     }
 }

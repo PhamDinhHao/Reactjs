@@ -33,7 +33,8 @@
             "specialty": "Specialties",
             "manage-specialty": "Manage specialties",
             "handbook": "Handbook",
-            "manage-handbook": "Manage handbooks"
+            "manage-handbook": "Manage handbooks",
+            "upload": "Upload"
         },
         "doctor": {
             "manage-doctor": "Manage Doctor's Schedule",
@@ -53,9 +54,12 @@
         "role": "Role",
         "image": "Avater",
         "save": "Save user",
-        "edit": "Edit user"
+        "edit": "Edit user",
+        "header": "Header"
     },
     "homepage": {
+        "read-more": "Read more",
+        "view-profile": "View profile",
         "outstanding-doctor": "Last week's featured doctor",
         "more-infor": "More infor",
         "specialty-popular": "Popular specialties",
@@ -74,7 +78,8 @@
             "choose": "Choose",
             "free": " and book (free)",
             "book-free": " and book (free)",
-            "book-paid": " and book (paid)"
+            "book-paid": " and book (paid)",
+            "view-more": "View more"
         },
         "extra-infor-doctor": {
             "text-address": "Address of examination",
@@ -96,7 +101,12 @@
             "btn-confirm": "Confirm",
             "btn-cancel": "Cancel",
             "price": "Examination price: ",
-            "price-booking-modal": "Free examination"
+            "price-booking-modal": "Free examination",
+            "doctor-info": "Doctor's information",
+            "doctor-name": "Doctor's name",
+            "doctor-specialty": "Doctor's specialty",
+            "doctor-address": "Doctor's address",
+            "terms-notice": "Terms and conditions"
         }
     },
     "admin": {
@@ -115,5 +125,19 @@
             "specialty": "Specialty",
             "select-clinic": "Select clinic"
         }
+    },
+    "remedy": {
+        "title": "Manage medicine",
+        "add": "Add medicine",
+        "save": "Save infor",
+        "email": "Email",
+        "password": "Password",
+        "first-name": "First name",
+        "last-name": "Last name",
+        "phone-number": "Phone number",
+        "address": "Address",
+        "prescription": "Prescription",
+        "prescription-detail": "Prescription detail",
+        "send-invoice": "Send invoice"
     }
 }

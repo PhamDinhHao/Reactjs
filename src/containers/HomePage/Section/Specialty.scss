@@ -1,9 +1,173 @@
 .section-specialty {
-    cursor: pointer;
-    .specialty-name {
-        padding: 10px 0;
-        &:hover{
-            color: #45c3d2;
+    background: #f5f5f5;
+    padding: 40px 0;
+
+    .section-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 15px;
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+
+            .title-section {
+                font-size: 24px;
+                font-weight: 600;
+                color: #333;
+                position: relative;
+                padding-bottom: 8px;
+
+                &:after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 50px;
+                    height: 3px;
+                    background: #45c3d2;
+                    border-radius: 3px;
+                }
+            }
+
+            .btn-section {
+                padding: 10px 20px;
+                background: transparent;
+                border: 2px solid #45c3d2;
+                color: #45c3d2;
+                border-radius: 25px;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                cursor: pointer;
+
+                &:hover {
+                    background: #45c3d2;
+                    color: white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 5px 15px rgba(69, 195, 210, 0.3);
+                }
+            }
+        }
+
+        .section-body {
+            .slick-slider {
+                .slick-list {
+                    margin: 0 -10px;
+                }
+
+                .slick-track {
+                    display: flex;
+                    gap: 20px;
+                }
+
+                .slick-arrow {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    background: white;
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                    z-index: 1;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background: #45c3d2;
+                        &:before {
+                            color: white;
+                        }
+                    }
+
+                    &:before {
+                        color: #666;
+                        font-size: 20px;
+                    }
+                }
+
+                .slick-prev {
+                    left: -20px;
+                }
+
+                .slick-next {
+                    right: -20px;
+                }
+            }
+
+            .specialty-child {
+                padding: 0 10px;
+                cursor: pointer;
+
+                &:hover {
+                    .section-img-specialty {
+                        transform: scale(1.05);
+                        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                    }
+
+                    .specialty-name {
+                        color: #45c3d2;
+                    }
+                }
+
+                .section-img-specialty {
+                    height: 200px;
+                    width: 100%;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    border-radius: 12px;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                }
+
+                .specialty-name {
+                    text-align: center;
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #333;
+                    margin-top: 15px;
+                    transition: color 0.3s ease;
+                    padding: 0 10px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
+    }
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .section-specialty {
+        padding: 30px 0;
+
+        .section-container {
+            .section-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+
+                .title-section {
+                    &:after {
+                        left: 50%;
+                        transform: translateX(-50%);
+                    }
+                }
+            }
+
+            .section-body {
+                .slick-slider {
+                    .slick-arrow {
+                        display: none !important;
+                    }
+                }
+
+                .specialty-child {
+                    .section-img-specialty {
+                        height: 150px;
+                    }
+                }
+            }
         }
     }
 }
