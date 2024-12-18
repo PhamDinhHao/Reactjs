@@ -56,7 +56,7 @@ class BookingModal extends Component {
     console.log("this.state.amount", this.state.amount);
     console.log("this.state.orderInfo", this.state.orderInfo);
     try {
-        const response = await axios.post('/api/create-payment', {
+        const response = await axios.post('http://localhost:8080/api/create-payment', {
             amount: this.state.amount, // Số tiền (VND)
             orderInfo: this.state.orderInfo,
             bankCode: "NCB", // Optional
@@ -137,7 +137,7 @@ class BookingModal extends Component {
     });
   };
   handleConfirmBookingAppointment = async () => {
-    if (this.state.paymentId === "32") {
+    if (this.state.paymentId === "76") {
       this.setState({ isVNPayModalOpen: true });
       return;
     }

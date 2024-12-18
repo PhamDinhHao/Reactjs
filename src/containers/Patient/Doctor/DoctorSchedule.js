@@ -105,11 +105,11 @@ class DoctorSchedule extends Component {
                         <div className="calendar-icon">
                             <i className="fas fa-calendar-alt"></i>
                         </div>
-                        <select 
+                        <select
                             onChange={this.handleOnChangeSelect}
                             className="date-selector"
                         >
-                            {allDays.map((item, index) => (
+                            {allDays && allDays.length > 0 && allDays.map((item, index) => (
                                 <option value={item.value} key={index}>
                                     {item.label}
                                 </option>
