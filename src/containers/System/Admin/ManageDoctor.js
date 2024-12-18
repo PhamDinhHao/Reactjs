@@ -86,6 +86,7 @@ class ManageDoctor extends Component {
             let dataSelectProvince = this.buildDataInputSelect(resProvince, "PROVINCE")
             let dataSelectSpecialty = this.buildDataInputSelect(resSpecialty, "SPECIALTY")
             let dataSelectClinic = this.buildDataInputSelect(resClinic, "CLINIC")
+            console.log(dataSelectPrice, dataSelectPayment, dataSelectProvince, dataSelectSpecialty, dataSelectClinic)
             this.setState({
                 listPrice: dataSelectPrice,
                 listPayment: dataSelectPayment,

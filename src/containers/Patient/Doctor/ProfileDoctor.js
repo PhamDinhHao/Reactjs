@@ -59,10 +59,6 @@ class ProfileDoctor extends Component {
                         <i className="far fa-calendar-alt"></i>
                         <span>{date}</span>
                     </div>
-                    <div className='booking-note'>
-                        <i className="fas fa-info-circle"></i>
-                        <FormattedMessage id="patient.booking-modal.price-booking-modal"/>
-                    </div>
                 </div>
             );
         }
@@ -126,13 +122,18 @@ class ProfileDoctor extends Component {
                                 </span>
                                 <span className='price-amount'>
                                     {dataProfile?.Doctor_Infor && (
-                                        <NumberFormat 
-                                            value={dataProfile.Doctor_Infor.priceTypeData}
-                                            displayType={'text'}
-                                            thousandSeparator={true}
-                                            suffix={language === LANGUAGES.VI ? ' VND' : ' USD'}
-                                            className='price-value'
-                                        />
+                                        <>
+                                        <div className='price-value' style={{display: 'flex', alignItems: 'center'}}>
+                                            <NumberFormat 
+                                                value={dataProfile.Doctor_Infor.priceTypeData?.valueVi || dataProfile.Doctor_Infor.priceTypeData}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                suffix={language === LANGUAGES.VI ? ' VND' : ' USD'}
+                                                className='price-value'
+                                            />
+                                            <div style={{marginLeft: '10px'}}>Hình thức thanh toán: {dataProfile.Doctor_Infor.paymentId === 31 ? 'Tiền mặt' : 'Thẻ ATM'}</div>
+                                        </div>
+                                        </>
                                     )}
                                 </span>
                             </div>
