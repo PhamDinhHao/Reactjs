@@ -25,6 +25,13 @@ import axios from "axios";
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
+// Thêm constant cho payment methods
+const PAYMENT_METHODS = [
+  { value: "NCB", label: "Ngân hàng Nông nghiệp và Phát triển Nông thôn" },
+  { value: "INTCARD", label: "Thẻ thanh toán quốc tế (Visa, Master, JCB)" },
+  { value: "VNBANK", label: "Thẻ ATM nội địa/Tài khoản ngân hàng" },
+];
+
 class BookingModal extends Component {
   constructor(props) {
     super(props);
@@ -46,27 +53,87 @@ class BookingModal extends Component {
       amount: "",
       orderInfo: "",
       isVNPayModalOpen: false,
+      paymentStatus: {
+        success: false,
+        message: '',
+        transactionId: '',
+        amount: 0,
+        orderInfo: '',
+        paymentTime: ''
+      },
+      selectedPaymentMethod: "",
     };
   }
 
   async componentDidMount() {
     this.props.getGenders();
+    
+    // Check if there's a payment return in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('vnp_ResponseCode')) {
+      await this.handlePaymentResult();
+    }
   }
-  handleVNPayPayment = async () => {
-    console.log("this.state.amount", this.state.amount);
-    console.log("this.state.orderInfo", this.state.orderInfo);
+  
+  handlePaymentResult = async () => {
     try {
-        const response = await axios.post('http://localhost:8080/api/create-payment', {
-            amount: this.state.amount, // Số tiền (VND)
-            orderInfo: this.state.orderInfo,
-            bankCode: "NCB", // Optional
+      const response = await axios.get(`http://localhost:8080/api/vnpay-return${window.location.search}`);
+      const { code, message, data } = response.data;
+      
+      const paymentStatus = {
+        success: code === '00',
+        message: message,
+        transactionId: data.vnp_TransactionNo,
+        amount: data.vnp_Amount / 100,
+        orderInfo: data.vnp_OrderInfo,
+        paymentTime: data.vnp_PayDate
+      };
+
+      this.setState({ paymentStatus }, async () => {
+        if (paymentStatus.success) {
+          toast.success('Thanh toán thành công');
+          // const returnUrl = localStorage.getItem('returnUrl');
+          // if (returnUrl) {
+          //   localStorage.removeItem('returnUrl');
+          //   window.location.href = returnUrl;
+          // }
+        } else {
+          toast.error(message || 'Thanh toán thất bại');
+        }
       });
+
+    } catch (error) {
+      console.error('Payment verification error:', error);
+      this.setState({
+        paymentStatus: {
+          success: false,
+          message: 'Có lỗi xảy ra khi xác thực thanh toán'
+        }
+      });
+      toast.error('Có lỗi xảy ra khi xác thực thanh toán');
+    }
+  };
+
+  handleVNPayPayment = async () => {
+    try {
+      const currentPath = window.location.pathname + window.location.search;
+      localStorage.setItem('returnUrl', currentPath);
+      // await this.processBookingAppointment();
+
+      const response = await axios.post('http://localhost:8080/api/create-payment', {
+        amount: this.state.amount,
+        orderInfo: this.state.orderInfo,
+        bankCode: this.state.selectedPaymentMethod,
+        returnUrl: window.location.origin + currentPath
+      });
+      
       window.location.href = response.data.paymentUrl;
     } catch (error) {
       console.error("Payment error:", error);
       toast.error("Payment failed");
     }
   };
+
   async componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.language !== this.props.language) {
       this.setState({
@@ -88,6 +155,7 @@ class BookingModal extends Component {
         );
         this.setState({
           paymentId: data?.Doctor_Infor?.paymentId || "",
+          amount: data?.Doctor_Infor?.priceTypeData?.valueVi,
         });
         this.setState({
           doctorId: this.props.dataScheduleTimeModal.doctorId,
@@ -137,40 +205,35 @@ class BookingModal extends Component {
     });
   };
   handleConfirmBookingAppointment = async () => {
-    if (this.state.paymentId === "76") {
-      this.setState({ isVNPayModalOpen: true });
+    const requiredFields = {
+      fullName: "Họ tên",
+      phoneNumber: "Số điện thoại", 
+      email: "Email",
+      address: "Địa chỉ",
+      birthday: "Ngày sinh",
+      selectedGender: "Giới tính"
+    };
+
+    for (const [field, label] of Object.entries(requiredFields)) {
+      if (!this.state[field]) {
+        toast.error(`Vui lòng nhập ${label}`);
+        return;
+      }
+    }
+
+    if (this.state.paymentId === "32") {
+      this.setState({ 
+        isVNPayModalOpen: true,
+        amount: this.state.amount,
+        orderInfo: `Thanh toán khám bệnh - ${this.state.fullName}`
+      });
       return;
     }
-    let date = new Date(this.state.birthday).getTime();
-    let timeBooking = this.buildTimeBooking(this.props.dataScheduleTimeModal);
-    let doctorName = this.buildDataGender(this.props.dataScheduleTimeModal);
 
-    let res = await postBookingAppointment({
-      fullName: this.state.fullName,
-      phoneNumber: this.state.phoneNumber,
-      email: this.state.email,
-      address: this.state.address,
-      reason: this.state.reason,
-      date: this.props.dataScheduleTimeModal?.date || "",
-      birthday: date,
-      doctorId: this.state.doctorId,
-      timeType: this.state.timeType,
-      selectedGender: this.state.selectedGender.value,
-      price: this.state.price,
-      doctorName: doctorName,
-      timeBooking: timeBooking,
-      language: this.props.language,
-    });
-    if (res && res.errCode === 0) {
-      toast.success("Dat lich kham thanh cong");
-      this.props.closeModalBooking();
-    } else {
-      toast.error("Dat lich kham that bai");
-    }
+    await this.processBookingAppointment();
   };
-  handlePaypalSubmit = async () => {
-    // Here you would handle the PayPal payment processing
-    // After successful payment, proceed with booking
+
+  processBookingAppointment = async () => {
     let date = new Date(this.state.birthday).getTime();
     let timeBooking = this.buildTimeBooking(this.props.dataScheduleTimeModal);
     let doctorName = this.buildDataGender(this.props.dataScheduleTimeModal);
@@ -190,18 +253,15 @@ class BookingModal extends Component {
       doctorName: doctorName,
       timeBooking: timeBooking,
       language: this.props.language,
-      paymentMethod: "paypal",
-      paypalEmail: this.state.paypalEmail,
     });
-
     if (res && res.errCode === 0) {
       toast.success("Đặt lịch khám thành công");
-      this.setState({ isPaypalModalOpen: false });
       this.props.closeModalBooking();
     } else {
       toast.error("Đặt lịch khám thất bại");
     }
   };
+
   buildDataGender = (data) => {
     let result = [];
     let language = this.props.language;
@@ -459,6 +519,7 @@ class BookingModal extends Component {
                 className="form-control"
                 value={this.state.amount}
                 onChange={(e) => this.setState({ amount: e.target.value })}
+                disabled
               />
             </div>
             <div className="form-group">
@@ -468,6 +529,16 @@ class BookingModal extends Component {
                 className="form-control"
                 value={this.state.orderInfo}
                 onChange={(e) => this.setState({ orderInfo: e.target.value })}
+                disabled
+              />
+            </div>
+            <div className="form-group">
+              <label>Phương thức thanh toán:</label>
+              <Select
+                options={PAYMENT_METHODS}
+                onChange={(option) => this.setState({ selectedPaymentMethod: option.value })}
+                placeholder="Chọn phương thức thanh toán"
+                className="payment-method-select"
               />
             </div>
           </div>
@@ -475,6 +546,7 @@ class BookingModal extends Component {
             <button
               className="btn btn-primary"
               onClick={this.handleVNPayPayment}
+              disabled={!this.state.selectedPaymentMethod || this.state.amount === 0}
             >
               Thanh toán
             </button>
