@@ -91,3 +91,33 @@
         }
     }
 }
+
+.faceid {
+    font-size: 35px;
+    background: #ccc;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin: 0 10px;
+    cursor: pointer;
+
+    &:hover {
+        background: #999;
+    }
+}
+
+.camera-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    video {
+        border-radius: 8px;
+        border: 2px solid #ccc;
+    }
+}
