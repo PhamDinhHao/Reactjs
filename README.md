@@ -1,68 +1,82 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Pham Dinh Hao
+## Full Stack Developer
 
-## Available Scripts
+[![Email](https://img.shields.io/badge/Email-dinhhao1810%40gmail.com-blue)](mailto:dinhhao1810@gmail.com)
+[![Phone](https://img.shields.io/badge/Phone-%2B84%20329635202-green)](tel:+84329635202)
+[![Location](https://img.shields.io/badge/Location-Binh%20Tan%2C%20Ho%20Chi%20Minh%20City-orange)](https://goo.gl/maps/HCM)
 
-In the project directory, you can run:
+## 👨‍💻 About Me
 
-### `npm start`
+I am a fourth-year student at Ho Chi Minh City University of Technology (HUTECH) with a passion for programming. I specialize in creating impactful applications and websites that enhance daily life. My portfolio includes projects such as chat applications, a social network for gamers, and an e-commerce platform for fertilizer sales.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 🏆 Achievements
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- Outstanding Student (2022 - 2024)
+- Consolation Prize - HUTECH Code War 2024
+- Third Prize - HDBank Hackathon 2024
 
-### `npm test`
+## 🎓 Education
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Ho Chi Minh City University of Technology (HUTECH)**  
+*2021 - Present*
 
-### `npm run build`
+## 💼 Professional Experience
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Blash Mail | Viet Japan Digital Company
+*Full Stack Developer | September 2024 - Present*
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+Email management web application featuring:
+- Custom email template editor with HTML support
+- Contact list management system
+- Email tracking and monitoring dashboard
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Technologies:** ReactJS, NextJS, TailwindCSS, NodeJS, MySQL
 
-### `npm run eject`
+### Sekeruku | Viet Japan Digital Company
+*Frontend Developer | May 2024 - August 2024*
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Telesales management platform with features:
+- Call management dashboard
+- User and caller administration interface
+- Call history tracking system
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Technologies:** ReactJS, NextJS, TailwindCSS
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Viet Japan Connect | Viet Japan Digital Company
+*Frontend Developer Intern | February 2024 - April 2024*
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Business networking platform connecting Vietnamese and Japanese companies:
+- Multilingual content management system
+- Company profile and service matching
+- Automated translation system (3 languages)
 
-## Learn More
+**Technologies:** ReactJS, NextJS, SCSS
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🛠 Technical Skills
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Frontend
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
+![CSS/SCSS](https://img.shields.io/badge/SCSS-CC6699?style=flat&logo=sass&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=next.js&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=flat&logo=bootstrap&logoColor=white)
 
-### Code Splitting
+### Backend
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=flat&logo=laravel&logoColor=white)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+### Database
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white)
+![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=flat&logo=microsoft-sql-server&logoColor=white)
 
-### Analyzing the Bundle Size
+### Version Control
+![Git](https://img.shields.io/badge/Git-F05032?style=flat&logo=git&logoColor=white)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+---
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+<p align="center">
+  <i>Open to new opportunities and collaborations!</i>
+</p>

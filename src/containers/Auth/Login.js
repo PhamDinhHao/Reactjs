@@ -65,7 +65,7 @@ class Login extends Component {
                 formData.append('faceImage', blob);
                 formData.append('username', this.state.username);
 
-                const response = await fetch('/api/auth/face-recognition', {
+                const response = await fetch('http://localhost:8080/api/get-face-id', {
                     method: 'POST',
                     body: formData
                 });
@@ -152,7 +152,7 @@ class Login extends Component {
             const signature = btoa(String.fromCharCode(...new Uint8Array(assertion.response.signature)));
 
             // Gửi thông tin xác thực lên server
-            const response = await fetch('/api/auth/webauthn/authenticate', {
+            const response = await fetch('http://localhost:8080/api/get-face-id', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

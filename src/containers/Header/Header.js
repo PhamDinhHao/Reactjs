@@ -60,6 +60,7 @@ class Header extends Component {
                     const videoTrack = stream.getVideoTracks()[0];
                     const imageCapture = new ImageCapture(videoTrack);
                     const blob = await imageCapture.takePhoto();
+                    console.log('blob', blob);
                     const formData = new FormData();
                     formData.append('faceImage', blob);
                     formData.append('firstName', this.props.userInfo.firstName);
