@@ -13,7 +13,6 @@ I am a fourth-year student at Ho Chi Minh City University of Technology (HUTECH)
 
 - Outstanding Student (2022 - 2024)
 - Consolation Prize - HUTECH Code War 2024
-- Third Prize - HDBank Hackathon 2024
 
 ## 🎓 Education
 
