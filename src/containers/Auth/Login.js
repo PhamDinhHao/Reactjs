@@ -52,36 +52,6 @@ class Login extends Component {
                 // Đăng nhập bằng mật khẩu
                 let response = await handleLoginAPI(this.state.username, this.state.password);
                 userData = response.user;
-            } else {
-                // Đăng nhập bằng Face ID
-                // Mở camera và thực hiện nhận diện khuôn mặt
-                await this.handleOpenCamera();
-                
-                // Gọi API nhận diện khuôn mặt
-                const formData = new FormData();
-                const videoTrack = this.state.videoRef.current.srcObject.getVideoTracks()[0];
-                const imageCapture = new ImageCapture(videoTrack);
-                const blob = await imageCapture.takePhoto();
-                formData.append('faceImage', blob);
-                formData.append('username', this.state.username);
-
-                const response = await fetch('http://localhost:8080/api/get-face-id', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    throw new Error('Xác thực khuôn mặt thất bại');
-                }
-
-                const data = await response.json();
-                userData = data.user;
-                
-                // Đóng camera sau khi nhận diện
-                if (this.state.videoRef.current?.srcObject) {
-                    this.state.videoRef.current.srcObject.getTracks().forEach(track => track.stop());
-                }
-                this.setState({ isCameraOpen: false });
             }
 
             if (userData) {
@@ -212,9 +182,9 @@ class Login extends Component {
                             <button className='btn-login' onClick={() => this.handleLogin()}>
                                 Login with Password
                             </button>
-                            <button className='btn-login mt-3' onClick={() => this.setState({ password: '' }, this.handleLogin)}>
+                            {/* <button className='btn-login mt-3' onClick={() => this.setState({ password: '' }, this.handleLogin)}>
                                 Login with Face Recognition
-                            </button>
+                            </button> */}
                         </div>
 
                         <div className='col-12 text-center mt-3'>
@@ -228,7 +198,7 @@ class Login extends Component {
                             )}
                         </div>
 
-                        {this.state.isCameraOpen && (
+                        {/* {this.state.isCameraOpen && (
                             <div className='camera-container'>
                                 <video
                                     ref={this.state.videoRef}
@@ -237,7 +207,7 @@ class Login extends Component {
                                     style={{ width: '100%', maxWidth: '400px' }}
                                 />
                             </div>
-                        )}
+                        )} */}
                     </div>
                 </div>
             </div>

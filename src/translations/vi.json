@@ -55,7 +55,8 @@
         "save": "Lưu user",
         "edit": "Lưu thay đổi",
         "upload": "Tải lên",
-        "header": "Header"
+        "header": "Header",
+        "title": "Tiêu đề"
     },
     "homepage": {
         "read-more": "Xem thêm",

@@ -221,7 +221,7 @@ class BookingModal extends Component {
       }
     }
 
-    if (this.state.paymentId === "32") {
+    if (this.state.paymentId === "76") {
       this.setState({ 
         isVNPayModalOpen: true,
         amount: this.state.amount,

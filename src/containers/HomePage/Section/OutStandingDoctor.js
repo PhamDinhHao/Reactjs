@@ -69,20 +69,20 @@ class OutStandingDoctor extends Component {
                                                          style={{ backgroundImage: `url(${imageBase64})` }}>
                                                     </div>
                                                 </div>
-                                                <div className='specialty-badge'>
+                                                {/* <div className='specialty-badge'>
                                                     <i className="fas fa-stethoscope"></i>
                                                     Cơ xương khớp
-                                                </div>
+                                                </div> */}
                                             </div>
 
                                             <div className='doctor-info'>
                                                 <h3 className='doctor-name'>
                                                     {language === LANGUAGES.VI ? nameVi : nameEn}
                                                 </h3>
-                                                <div className='specialty'>
+                                                {/* <div className='specialty'>
                                                     <i className="fas fa-hospital"></i>
                                                     <span>Cơ xương khớp 1</span>
-                                                </div>
+                                                </div> */}
                                                 <div className='view-profile'>
                                                     <FormattedMessage id="homepage.view-profile" />
                                                     <i className="fas fa-chevron-right"></i>

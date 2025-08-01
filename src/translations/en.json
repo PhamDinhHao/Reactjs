@@ -55,7 +55,8 @@
         "image": "Avater",
         "save": "Save user",
         "edit": "Edit user",
-        "header": "Header"
+        "header": "Header",
+        "title": "Title"
     },
     "homepage": {
         "read-more": "Read more",

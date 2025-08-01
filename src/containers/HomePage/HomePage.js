@@ -14,6 +14,7 @@ import "./HomePage.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from 'axios';
+import { head } from "lodash";
 class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +22,9 @@ class HomePage extends Component {
       messages: [],
       input: "",
       isChatOpen: false,
+      isRecording: false,
+      mediaRecorder: null,
+      audioChunks: [],
     };
   }
 
@@ -56,6 +60,59 @@ class HomePage extends Component {
     }));
   };
 
+  startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
+      
+      mediaRecorder.ondataavailable = (event) => {
+        if (event.data.size > 0) {
+          this.setState(prevState => ({
+            audioChunks: [...prevState.audioChunks, event.data]
+          }));
+        }
+      };
+
+      mediaRecorder.onstop = async () => {
+        const audioBlob = new Blob(this.state.audioChunks, { type: 'audio/wav' });
+        const formData = new FormData();
+        formData.append('audio', audioBlob);
+
+        try {
+          const response = await axios.post('http://localhost:8080/api/chat', 
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }
+          );
+          const botMessage = { sender: 'bot', text: response.data.reply };
+          this.setState(prevState => ({
+            messages: [...prevState.messages, botMessage],
+            audioChunks: []
+          }));
+        } catch (error) {
+          console.error('Error sending audio:', error);
+        }
+      };
+
+      this.setState({ mediaRecorder, isRecording: true });
+      mediaRecorder.start();
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+    }
+  };
+
+  stopRecording = () => {
+    const { mediaRecorder } = this.state;
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop();
+      mediaRecorder.stream.getTracks().forEach(track => track.stop());
+      this.setState({ isRecording: false });
+    }
+  };
+
   render() {
     let setting = {
       dots: false,
@@ -75,7 +132,7 @@ class HomePage extends Component {
           <Specialty setting={setting} />
           <MedicalFacility setting={setting} />
           <OutStandingDoctor setting={setting} />
-          <HandBook setting={setting} />
+          {/* <HandBook setting={setting} /> */}
           <HomeFooter />
         </div>
         <div className="chat-button" onClick={this.toggleChat}>
@@ -101,6 +158,12 @@ class HomePage extends Component {
                 onChange={this.handleInputChange}
                 placeholder="Nhập tin nhắn..."
               />
+              <button 
+                className={`record-button ${this.state.isRecording ? 'recording' : ''}`}
+                onClick={this.state.isRecording ? this.stopRecording : this.startRecording}
+              >
+                <i className="fas fa-microphone"></i>
+              </button>
               <button onClick={this.sendMessage}>Gửi</button>
             </div>
           </div>

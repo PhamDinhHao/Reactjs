@@ -63,7 +63,7 @@ class DoctorExtraInfor extends Component {
                             <h3>{extraInfor.nameClinic}</h3>
                             <div className='clinic-address'>
                                 <i className="fas fa-map-marker-alt"></i>
-                                {extraInfor.addresClinic}
+                                {extraInfor.addressClinic}
                             </div>
                         </div>
                     )}

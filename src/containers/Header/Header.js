@@ -139,7 +139,7 @@ class Header extends Component {
                     <i className="fas fa-cog" onClick={this.handleOpenSettings}></i>
                 </div>
 
-                {showSettingsModal && (
+                {/* {showSettingsModal && (
                     <div className="settings-modal">
                         <div className="modal-header">
                             <h3><FormattedMessage id="settings.facial-recognition" /></h3>
@@ -163,7 +163,7 @@ class Header extends Component {
                             </div>
                         </div>
                     </div>
-                )}
+                )} */}
             </div>
         );
     }
