@@ -117,6 +117,7 @@ class ManageDoctor extends Component {
         }
     }
     buildDataInputSelect = (inputData, type) => {
+        console.log( "inputData", inputData, "type", type)
         let result = [];
         let { language } = this.props;
         if (inputData && inputData.length > 0) {

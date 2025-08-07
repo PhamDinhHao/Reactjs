@@ -131,7 +131,7 @@ class ProfileDoctor extends Component {
                                                 suffix={language === LANGUAGES.VI ? ' VND' : ' USD'}
                                                 className='price-value'
                                             />
-                                            <div style={{marginLeft: '10px'}}>Hình thức thanh toán: {dataProfile.Doctor_Infor.paymentId === 31 ? 'Tiền mặt' : 'Thẻ ATM'}</div>
+                                            <div style={{marginLeft: '10px'}}>Hình thức thanh toán: {Number(dataProfile.Doctor_Infor.paymentId) === 31 ? 'Tiền mặt' : 'Thẻ ATM'}</div>
                                         </div>
                                         </>
                                     )}

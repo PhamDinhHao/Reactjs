@@ -169,7 +169,7 @@ class BookingModal extends Component {
     let language = this.props.language;
     if (dataTime && !_.isEmpty(dataTime)) {
       let time =
-        language === LANGUAGES.VI ? dataTime.valueVi : dataTime.valueEn;
+        language === LANGUAGES.VI ? dataTime.timeTypeData.valueVi : dataTime.timeTypeData.valueEn;
       let date =
         language === LANGUAGES.VI
           ? moment.unix(+dataTime.date / 1000).format("dddd - DD/MM/YYYY")
